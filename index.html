@@ -1,0 +1,1448 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Forever Young — Система трансформации | Andronik</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #07060a;
+      --gold:      #c9a96e;
+      --gold-dim:  rgba(201,169,110,0.12);
+      --text:      #e8e0d0;
+      --text-dim:  #4a4030;
+      --text-mid:  #7a7060;
+      --border:    rgba(255,255,255,0.06);
+      --serif:     'Cormorant Garamond', Georgia, serif;
+      --sans:      'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    ::-webkit-scrollbar { width: 2px; }
+    ::-webkit-scrollbar-thumb { background: #2a2018; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 48px;
+      height: 58px;
+      background: rgba(7,6,10,0.88);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 14px;
+      letter-spacing: 0.22em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 30px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      color: var(--text-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); }
+
+    .nav-cta {
+      background: var(--gold);
+      color: #07060a;
+      border: none;
+      padding: 8px 22px;
+      font-family: var(--sans);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.82; }
+
+    /* ─── SHARED ─── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 48px; }
+
+    .label {
+      font-size: 9px;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 14px;
+      display: block;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(34px,5vw,60px);
+      font-weight: 300;
+      line-height: 1.05;
+    }
+
+    .btn-primary {
+      display: inline-block;
+      background: var(--gold);
+      color: #07060a;
+      border: none;
+      padding: 14px 30px;
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.18s;
+      text-decoration: none;
+    }
+    .btn-primary:hover { opacity: 0.82; transform: scale(1.02); }
+
+    .btn-outline {
+      display: inline-block;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255,255,255,0.15);
+      padding: 14px 30px;
+      font-family: var(--sans);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: border-color 0.2s, transform 0.18s;
+      text-decoration: none;
+    }
+    .btn-outline:hover { border-color: var(--gold); transform: scale(1.02); }
+
+    /* Scroll-reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.75s ease, transform 0.75s ease;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ─── HERO ─── */
+    #hero {
+      height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-left {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 110px 56px 80px 80px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .flower-ring {
+      width: 88px;
+      height: 88px;
+      margin-bottom: 36px;
+      flex-shrink: 0;
+    }
+
+    .hero-eyebrow {
+      font-size: 9px;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 20px;
+    }
+
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(52px, 7vw, 88px);
+      font-weight: 300;
+      line-height: 0.95;
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    .hero-subtitle {
+      font-size: 10px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+    }
+
+    .hero-desc {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.8;
+      max-width: 320px;
+      margin-bottom: 38px;
+    }
+
+    .hero-btns {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 64px;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+    }
+
+    .stat {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+      padding-right: 12px;
+    }
+
+    .stat-num {
+      font-family: var(--serif);
+      font-size: clamp(26px, 3vw, 38px);
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      line-height: 1.45;
+      margin-top: 6px;
+    }
+
+    .hero-right {
+      position: relative;
+      overflow: hidden;
+      background: #0f0d12;
+    }
+
+    .hero-right img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(30%);
+      opacity: 0.8;
+    }
+
+    .hero-right::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, var(--bg) 0%, transparent 30%),
+                  linear-gradient(to top, var(--bg) 0%, transparent 25%);
+      pointer-events: none;
+    }
+
+    /* Photo placeholder */
+    .photo-placeholder {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(160deg, #14110e, #0b090f);
+    }
+
+    .photo-placeholder svg { opacity: 0.12; }
+
+    .scroll-arrow {
+      position: absolute;
+      bottom: 28px;
+      left: 30%;
+      transform: translateX(-50%);
+      font-size: 20px;
+      color: var(--text-dim);
+      animation: bob 2s ease infinite;
+      z-index: 5;
+    }
+
+    @keyframes bob {
+      0%, 100% { transform: translateX(-50%) translateY(0); }
+      50%       { transform: translateX(-50%) translateY(7px); }
+    }
+
+    /* ─── SYSTEM ─── */
+    #system {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 80px;
+      align-items: center;
+    }
+
+    .two-col.reversed .col-visual { order: -1; }
+
+    .col-text h2 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 4.5vw, 54px);
+      font-weight: 300;
+      line-height: 1.05;
+      margin-bottom: 18px;
+    }
+
+    .col-text p {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.8;
+      margin-bottom: 32px;
+      max-width: 380px;
+    }
+
+    .checklist {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .checklist li {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      font-size: 13px;
+      color: var(--text-mid);
+    }
+
+    .checklist li::before {
+      content: '';
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(201,169,110,0.4);
+      border-radius: 50%;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath d='M5 10l3.5 3.5L15 7' stroke='%23c9a96e' stroke-width='1.3' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+      flex-shrink: 0;
+    }
+
+    .col-visual {
+      position: relative;
+      height: 520px;
+      overflow: hidden;
+    }
+
+    .col-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      opacity: 0.75;
+    }
+
+    /* ─── PACKAGES ─── */
+    #packages {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    #packages .header {
+      margin-bottom: 52px;
+    }
+
+    #packages .header p {
+      font-size: 13px;
+      color: var(--text-mid);
+      margin-top: 10px;
+    }
+
+    .pkg-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .pkg-table th {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      text-align: left;
+      padding: 0 24px 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .pkg-table td {
+      padding: 18px 24px 18px 0;
+      border-bottom: 1px solid var(--border);
+      vertical-align: top;
+    }
+
+    .pkg-table tbody tr {
+      transition: background 0.2s;
+    }
+    .pkg-table tbody tr:hover td { background: rgba(201,169,110,0.025); }
+
+    .pkg-name {
+      font-size: 14px;
+      color: var(--text);
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pkg-badge {
+      font-size: 8px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--gold);
+      color: #07060a;
+      padding: 2px 7px;
+    }
+
+    .pkg-price {
+      font-family: var(--serif);
+      font-size: 17px;
+      color: var(--gold);
+      white-space: nowrap;
+    }
+
+    .pkg-period {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-family: var(--sans);
+      margin-left: 4px;
+    }
+
+    .pkg-sub-period {
+      font-size: 11px;
+      color: var(--text-dim);
+      margin-top: 2px;
+    }
+
+    .pkg-desc {
+      font-size: 12.5px;
+      color: var(--text-mid);
+      line-height: 1.65;
+    }
+
+    .pkg-table-cta {
+      margin-top: 40px;
+      text-align: center;
+    }
+
+    /* ─── FEATURED PACKAGES ─── */
+    .pkg-detail {
+      padding: 110px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .pkg-detail h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 4vw, 48px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 8px;
+    }
+
+    .pkg-detail-price {
+      font-family: var(--serif);
+      font-size: 44px;
+      color: var(--gold);
+      margin-bottom: 34px;
+      line-height: 1;
+    }
+
+    .pkg-detail-price span {
+      font-family: var(--sans);
+      font-size: 14px;
+      color: var(--text-dim);
+      margin-left: 8px;
+    }
+
+    .feature-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 13px;
+      margin-bottom: 34px;
+    }
+
+    .feature-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.55;
+    }
+
+    .feature-list li::before {
+      content: '✓';
+      color: var(--gold);
+      font-size: 11px;
+      flex-shrink: 0;
+      margin-top: 3px;
+    }
+
+    .who-box {
+      border: 1px solid var(--border);
+      padding: 22px 26px;
+      margin-top: 26px;
+    }
+
+    .who-box-label {
+      font-size: 9px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 10px;
+    }
+
+    .who-box p {
+      font-size: 12px;
+      color: var(--text-mid);
+      line-height: 1.7;
+    }
+
+    .pkg-visual {
+      height: 500px;
+      background: #0f0d12;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .pkg-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(20%);
+      opacity: 0.72;
+    }
+
+    /* ─── HOW IT WORKS ─── */
+    #how {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    #how .header {
+      margin-bottom: 60px;
+    }
+
+    #how .header p {
+      font-size: 13px;
+      color: var(--text-mid);
+      margin-top: 10px;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      margin-bottom: 60px;
+    }
+
+    .step {
+      padding: 28px 20px 28px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .step-num {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      margin-bottom: 14px;
+    }
+
+    .step-title {
+      font-family: var(--serif);
+      font-size: 24px;
+      color: var(--text);
+      margin-bottom: 10px;
+    }
+
+    .step-desc {
+      font-size: 11px;
+      color: var(--text-dim);
+      line-height: 1.65;
+    }
+
+    .accountability {
+      border: 1px solid var(--border);
+      padding: 42px 52px;
+      display: grid;
+      grid-template-columns: 100px 1fr;
+      gap: 44px;
+      align-items: center;
+    }
+
+    .accountability h3 {
+      font-family: var(--serif);
+      font-size: 30px;
+      font-weight: 300;
+      margin-bottom: 10px;
+    }
+
+    .accountability p {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.75;
+      max-width: 520px;
+    }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    #testimonials .header {
+      margin-bottom: 50px;
+    }
+
+    #testimonials .header p {
+      font-size: 13px;
+      color: var(--text-mid);
+      margin-top: 10px;
+    }
+
+    .testimonials-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+    }
+
+    .t-card {
+      border: 1px solid var(--border);
+      overflow: hidden;
+      transition: transform 0.25s, border-color 0.25s;
+    }
+
+    .t-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(201,169,110,0.2);
+    }
+
+    .t-photo {
+      height: 210px;
+      position: relative;
+      overflow: hidden;
+      background: #0f0d12;
+    }
+
+    .t-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: grayscale(25%);
+      opacity: 0.65;
+    }
+
+    .t-body {
+      padding: 26px 24px;
+    }
+
+    .t-quote {
+      font-family: var(--serif);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--text);
+      line-height: 1.65;
+      margin-bottom: 18px;
+    }
+
+    .t-author {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+    }
+
+    /* ─── ABOUT ─── */
+    #about {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    #about h2 {
+      font-family: var(--serif);
+      font-size: clamp(34px, 5vw, 60px);
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+
+    #about .name-sub {
+      font-family: var(--serif);
+      font-size: 20px;
+      color: var(--gold);
+      margin-bottom: 30px;
+      font-style: italic;
+    }
+
+    .about-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      margin-bottom: 46px;
+    }
+
+    .about-list li {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      font-size: 13px;
+      color: var(--text-mid);
+    }
+
+    .about-list li::before {
+      content: '◎';
+      color: var(--gold);
+      font-size: 11px;
+      flex-shrink: 0;
+    }
+
+    .about-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+
+    .about-stat {
+      border-top: 1px solid var(--border);
+      padding-top: 14px;
+    }
+
+    .about-stat-num {
+      font-family: var(--serif);
+      font-size: 36px;
+      color: var(--text);
+      line-height: 1;
+    }
+
+    .about-stat-label {
+      font-size: 10px;
+      color: var(--text-dim);
+      line-height: 1.45;
+      margin-top: 5px;
+    }
+
+    .about-visual {
+      height: 620px;
+      background: #0f0d12;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .about-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      filter: grayscale(15%);
+      opacity: 0.82;
+    }
+
+    /* ─── CONTACT ─── */
+    #contact {
+      padding: 120px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    #contact h2 {
+      font-family: var(--serif);
+      font-size: clamp(30px, 4vw, 52px);
+      font-weight: 300;
+      line-height: 1.1;
+      margin-bottom: 14px;
+    }
+
+    #contact .sub {
+      font-size: 13px;
+      color: var(--text-mid);
+      line-height: 1.75;
+      margin-bottom: 38px;
+      max-width: 380px;
+    }
+
+    .form-field {
+      margin-bottom: 14px;
+    }
+
+    .form-field input,
+    .form-field select {
+      width: 100%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 14px 16px;
+      font-family: var(--sans);
+      font-size: 13px;
+      font-weight: 300;
+      outline: none;
+      transition: border-color 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+      border-radius: 0;
+    }
+
+    .form-field input::placeholder { color: var(--text-dim); }
+    .form-field input:focus,
+    .form-field select:focus { border-color: rgba(201,169,110,0.5); }
+
+    .form-field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='7' viewBox='0 0 12 7'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%234a4030' stroke-width='1.5' fill='none'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 16px center;
+      cursor: pointer;
+    }
+
+    .form-field select option { background: #1a1510; color: var(--text); }
+
+    .form-submit {
+      width: 100%;
+      background: var(--gold);
+      color: #07060a;
+      border: none;
+      padding: 16px;
+      font-family: var(--sans);
+      font-size: 13px;
+      letter-spacing: 0.08em;
+      cursor: pointer;
+      transition: opacity 0.2s, transform 0.18s;
+      margin-top: 6px;
+    }
+    .form-submit:hover { opacity: 0.85; transform: scale(1.01); }
+
+    .form-note {
+      font-size: 10px;
+      color: var(--text-dim);
+      margin-top: 14px;
+      line-height: 1.65;
+    }
+
+    .contact-visual {
+      height: 560px;
+      background: #0f0d12;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .contact-visual img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      filter: grayscale(20%);
+      opacity: 0.75;
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 36px 48px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .footer-logo {
+      font-family: var(--serif);
+      font-size: 13px;
+      letter-spacing: 0.18em;
+      color: var(--text-mid);
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      color: var(--text-dim);
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 860px) {
+      nav { padding: 0 24px; }
+      .nav-links { display: none; }
+      .container { padding: 0 24px; }
+
+      #hero { grid-template-columns: 1fr; height: auto; min-height: 100svh; }
+      .hero-left { padding: 90px 24px 48px; }
+      .hero-right { height: 280px; }
+      .hero-stats { grid-template-columns: repeat(2,1fr); gap: 16px; }
+
+      .two-col,
+      .two-col.reversed { grid-template-columns: 1fr; }
+      .two-col.reversed .col-visual { order: 0; }
+      .col-visual,
+      .pkg-visual,
+      .about-visual,
+      .contact-visual { height: 300px; }
+
+      .steps { grid-template-columns: 1fr 1fr; }
+      .step:nth-child(5) { grid-column: span 2; }
+
+      .testimonials-grid { grid-template-columns: 1fr; }
+
+      .accountability { grid-template-columns: 1fr; padding: 28px 24px; gap: 24px; }
+
+      #packages { padding: 80px 0; }
+      .pkg-detail { padding: 80px 0; }
+      #how, #testimonials, #about, #contact, #system { padding: 80px 0; }
+
+      footer { flex-direction: column; gap: 10px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">FOREVER YOUNG</a>
+  <ul class="nav-links">
+    <li><a href="#system">Система</a></li>
+    <li><a href="#packages">Пакеты</a></li>
+    <li><a href="#about">Обо мне</a></li>
+    <li><a href="#testimonials">Отзывы</a></li>
+    <li><a href="#contact">Контакты</a></li>
+  </ul>
+  <button class="nav-cta" onclick="scrollTo('contact')">Начать</button>
+</nav>
+
+<!-- ──────────────────────────── HERO ──────────────────────────── -->
+<section id="hero">
+  <div class="hero-left">
+    <!-- Flower of Life logo -->
+    <svg class="flower-ring" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+      <g stroke="#c9a96e" stroke-width="0.55" fill="none" opacity="0.7">
+        <circle cx="50" cy="50" r="20"/>
+        <circle cx="70"   cy="50"     r="20"/>
+        <circle cx="60"   cy="32.68"  r="20"/>
+        <circle cx="40"   cy="32.68"  r="20"/>
+        <circle cx="30"   cy="50"     r="20"/>
+        <circle cx="40"   cy="67.32"  r="20"/>
+        <circle cx="60"   cy="67.32"  r="20"/>
+        <circle cx="50"   cy="50"     r="34.64"/>
+        <circle cx="50"   cy="50"     r="40"/>
+      </g>
+    </svg>
+
+    <p class="hero-eyebrow">Andronik &middot; Bali &middot; Система трансформации</p>
+    <h1 class="hero-title">FOREVER<br>YOUNG</h1>
+    <p class="hero-subtitle">Energy &middot; Control &middot; Longevity</p>
+    <p class="hero-desc">Это не фитнес. Это система, которая меняет твоё тело, энергию и привычки навсегда.</p>
+
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollTo('contact')">Начать трансформацию</button>
+      <button class="btn-outline" onclick="scrollTo('system')">Узнать больше</button>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">350+</div>
+        <div class="stat-label">дней стойка<br>на руках</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">80+</div>
+        <div class="stat-label">клиентов по<br>всему миру</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">5+</div>
+        <div class="stat-label">лет практики<br>ежедневно</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">личная<br>вовлечённость</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="photo-placeholder">
+      <svg viewBox="0 0 100 100" width="220" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#c9a96e" stroke-width="0.5" fill="none">
+          <circle cx="50" cy="50" r="20"/>
+          <circle cx="70" cy="50" r="20"/><circle cx="60" cy="32.68" r="20"/>
+          <circle cx="40" cy="32.68" r="20"/><circle cx="30" cy="50" r="20"/>
+          <circle cx="40" cy="67.32" r="20"/><circle cx="60" cy="67.32" r="20"/>
+          <circle cx="50" cy="50" r="34.64"/>
+        </g>
+      </svg>
+    </div>
+    <!-- Replace with: <img src="photo-hero.jpg" alt="Andronik"> -->
+  </div>
+
+  <div class="scroll-arrow">↓</div>
+</section>
+
+<!-- ──────────────────────────── SYSTEM ──────────────────────────── -->
+<section id="system">
+  <div class="container">
+    <div class="two-col">
+      <div class="col-text reveal">
+        <span class="label">О системе</span>
+        <h2>Система<br>Forever Young</h2>
+        <p>Комплексный подход к трансформации тела, энергии и сознания на основе науки, дисциплины и контроля.</p>
+        <ul class="checklist">
+          <li>30-минутный утренний протокол</li>
+          <li>Индивидуальный план тренировок</li>
+          <li>Анализ крови и подбор добавок</li>
+          <li>Питание под твои цели и образ жизни</li>
+          <li>Accountability и контроль прогресса</li>
+        </ul>
+      </div>
+      <div class="col-visual reveal">
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 100 100" width="160" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#c9a96e" stroke-width="0.5" fill="none">
+              <circle cx="50" cy="50" r="20"/><circle cx="70" cy="50" r="20"/>
+              <circle cx="60" cy="32.68" r="20"/><circle cx="40" cy="32.68" r="20"/>
+              <circle cx="30" cy="50" r="20"/><circle cx="40" cy="67.32" r="20"/>
+              <circle cx="60" cy="67.32" r="20"/><circle cx="50" cy="50" r="34.64"/>
+            </g>
+          </svg>
+        </div>
+        <!-- Replace with: <img src="photo-system.jpg" alt="Система"> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── PACKAGES ──────────────────────────── -->
+<section id="packages">
+  <div class="container">
+    <div class="header reveal">
+      <span class="label">Тарифы</span>
+      <h2 class="section-title">Пакеты</h2>
+      <p>Выбери уровень системы, который подойдёт именно тебе.</p>
+    </div>
+
+    <div style="overflow-x:auto;">
+      <table class="pkg-table reveal">
+        <thead>
+          <tr>
+            <th style="width:26%">Пакет</th>
+            <th style="width:22%">Цена</th>
+            <th>Суть</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="pkg-name">Базовый</span></td>
+            <td>
+              <div class="pkg-price">$500 <span class="pkg-period">/мес</span></div>
+            </td>
+            <td><span class="pkg-desc">Диагностика + план тренировок + утренний протокол + accountability</span></td>
+          </tr>
+          <tr>
+            <td><span class="pkg-name">С БАДами</span></td>
+            <td>
+              <div class="pkg-price">$730 <span class="pkg-period">/первый мес</span></div>
+              <div class="pkg-sub-period">далее $700/мес</div>
+            </td>
+            <td><span class="pkg-desc">Базовый + минимальный стек БАДов подобранных лично</span></td>
+          </tr>
+          <tr>
+            <td><span class="pkg-name">Расширенный</span></td>
+            <td>
+              <div class="pkg-price">$1 500 <span class="pkg-period">/мес</span></div>
+            </td>
+            <td><span class="pkg-desc">Базовый + БАДы на $1 000 по анализу крови + план питания</span></td>
+          </tr>
+          <tr>
+            <td><span class="pkg-name">+ Нутрициолог</span></td>
+            <td>
+              <div class="pkg-price">$2 000 <span class="pkg-period">/мес</span></div>
+            </td>
+            <td><span class="pkg-desc">Расширенный + 2 сессии с нутрициологом в месяц</span></td>
+          </tr>
+          <tr>
+            <td>
+              <span class="pkg-name">
+                + Тренер онлайн
+                <span class="pkg-badge">Популярный</span>
+              </span>
+            </td>
+            <td>
+              <div class="pkg-price">$3 000 <span class="pkg-period">/мес</span></div>
+            </td>
+            <td><span class="pkg-desc">Расширенный + 3 онлайн-тренировки в неделю с тренером</span></td>
+          </tr>
+          <tr>
+            <td><span class="pkg-name">Годовой</span></td>
+            <td>
+              <div class="pkg-price">$18 000 <span class="pkg-period">/год</span></div>
+            </td>
+            <td><span class="pkg-desc">Полное сопровождение 12 мес + анализы крови + все БАДы</span></td>
+          </tr>
+          <tr>
+            <td><span class="pkg-name">VIP</span></td>
+            <td>
+              <div class="pkg-price">$30 000 <span class="pkg-period">/мес</span></div>
+            </td>
+            <td><span class="pkg-desc">Я живу у клиента на Бали или выезжаю — полное погружение</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="pkg-table-cta reveal">
+      <button class="btn-primary" onclick="scrollTo('contact')">Выбрать пакет</button>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── FEATURED 1 ──────────────────────────── -->
+<section class="pkg-detail">
+  <div class="container">
+    <div class="two-col">
+      <div class="col-text reveal">
+        <span class="label">Пакет</span>
+        <h2>Расширенный<br>+ Нутрициолог</h2>
+        <div class="pkg-detail-price">$2 000 <span>/ месяц</span></div>
+        <ul class="feature-list">
+          <li>Всё из Расширенного пакета ($1 500)</li>
+          <li>Индивидуальный подбор БАДов на $1 000 — лучшие в мире, с доставкой</li>
+          <li>Индивидуальный план питания под запрос и образ жизни</li>
+          <li>2 сессии с нутрициологом в месяц (раз в две недели)</li>
+          <li>Работа на основе анализов крови и данных от Andronik</li>
+          <li>Повторный тест через 3 месяца — корректировка всего плана</li>
+          <li>Accountability в Telegram: 3 раза в неделю + дневник питания (фото еды)</li>
+        </ul>
+        <button class="btn-primary" onclick="scrollTo('contact')">Выбрать программу</button>
+        <div class="who-box">
+          <div class="who-box-label">Кто проводит сессии?</div>
+          <p>Партнёр-нутрициолог — сертифицированный специалист, работающий под кураторством Andronik. Клиент получает профессиональную консультацию, Andronik контролирует общее направление и следит за результатами.</p>
+        </div>
+      </div>
+      <div class="pkg-visual reveal">
+        <div class="photo-placeholder">
+          <div style="text-align:center;opacity:0.2;">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:26px;color:#c9a96e;letter-spacing:0.25em;line-height:2.2;">FOREVER<br>YOUNG</div>
+            <div style="font-size:9px;color:#c9a96e;letter-spacing:0.35em;margin-top:4px;opacity:0.6;">SUPPLEMENT PROTOCOL</div>
+          </div>
+        </div>
+        <!-- Replace with: <img src="photo-supplements.jpg" alt="Добавки"> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── FEATURED 2 ──────────────────────────── -->
+<section class="pkg-detail" style="border-top:1px solid var(--border);">
+  <div class="container">
+    <div class="two-col reversed">
+      <div class="col-text reveal">
+        <span class="label">Пакет</span>
+        <h2>Расширенный<br>+ Тренер Онлайн</h2>
+        <div class="pkg-detail-price">$3 000 <span>/ месяц</span></div>
+        <ul class="feature-list">
+          <li>Всё из Расширенного пакета ($1 500)</li>
+          <li>3 онлайн-тренировки в неделю по 45–60 минут</li>
+          <li>Тренировки в прямом эфире — тренер видит тебя, корректирует технику</li>
+          <li>Индивидуальная программа тренировок под цели клиента</li>
+          <li>Дневник тренировок: все подходы, веса, повторения — в Telegram</li>
+          <li>Еженедельная обратная связь от тренера</li>
+          <li>Контроль системы и результаты от Andronik</li>
+        </ul>
+        <button class="btn-primary" onclick="scrollTo('contact')">Выбрать программу</button>
+        <div class="who-box">
+          <div class="who-box-label">Кто проводит тренировки?</div>
+          <p>Партнёр-тренер — специалист отобранный и обученный Andronik. Работает по его методологии и под его кураторством.</p>
+        </div>
+      </div>
+      <div class="col-visual pkg-visual reveal">
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 100 100" width="160" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#c9a96e" stroke-width="0.5" fill="none">
+              <circle cx="50" cy="50" r="20"/><circle cx="70" cy="50" r="20"/>
+              <circle cx="60" cy="32.68" r="20"/><circle cx="40" cy="32.68" r="20"/>
+              <circle cx="30" cy="50" r="20"/><circle cx="40" cy="67.32" r="20"/>
+              <circle cx="60" cy="67.32" r="20"/><circle cx="50" cy="50" r="34.64"/>
+            </g>
+          </svg>
+        </div>
+        <!-- Replace with: <img src="photo-training.jpg" alt="Тренировки"> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── HOW IT WORKS ──────────────────────────── -->
+<section id="how">
+  <div class="container">
+    <div class="header reveal">
+      <span class="label">Процесс</span>
+      <h2 class="section-title">Как всё работает</h2>
+      <p>Простой и понятный процесс.</p>
+    </div>
+
+    <div class="steps reveal">
+      <div class="step">
+        <div class="step-num">01</div>
+        <div class="step-title">Заявка</div>
+        <div class="step-desc">Оставь заявку и заполни опросник</div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <div class="step-title">Диагностика</div>
+        <div class="step-desc">Анализы крови, созвон с Andronik</div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <div class="step-title">План</div>
+        <div class="step-desc">Индивидуальный план по питанию, тренировкам и добавкам</div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <div class="step-title">Действие</div>
+        <div class="step-desc">Выполняй план, получай поддержку и обратную связь</div>
+      </div>
+      <div class="step">
+        <div class="step-num">05</div>
+        <div class="step-title">Результат</div>
+        <div class="step-desc">Контроль прогресса и улучшение показателей</div>
+      </div>
+    </div>
+
+    <div class="accountability reveal">
+      <svg viewBox="0 0 100 100" width="90" xmlns="http://www.w3.org/2000/svg">
+        <g stroke="#c9a96e" stroke-width="0.65" fill="none" opacity="0.6">
+          <circle cx="50" cy="50" r="20"/>
+          <circle cx="70" cy="50" r="20"/><circle cx="60" cy="32.68" r="20"/>
+          <circle cx="40" cy="32.68" r="20"/><circle cx="30" cy="50" r="20"/>
+          <circle cx="40" cy="67.32" r="20"/><circle cx="60" cy="67.32" r="20"/>
+          <circle cx="50" cy="50" r="34.64"/>
+        </g>
+      </svg>
+      <div>
+        <h3>Accountability</h3>
+        <p>Ты не остаёшься один. Контроль, поддержка и система, которая ведёт тебя к твоему лучшему результату.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── TESTIMONIALS ──────────────────────────── -->
+<section id="testimonials">
+  <div class="container">
+    <div class="header reveal">
+      <span class="label">Результаты</span>
+      <h2 class="section-title">Отзывы клиентов</h2>
+      <p>Реальные люди. Реальные результаты.</p>
+    </div>
+
+    <div class="testimonials-grid reveal">
+      <div class="t-card">
+        <div class="t-photo">
+          <div class="photo-placeholder">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:64px;color:#c9a96e;opacity:0.15;">И</div>
+          </div>
+          <!-- Replace with: <img src="photo-ilya.jpg" alt="Илья"> -->
+        </div>
+        <div class="t-body">
+          <p class="t-quote">«Лучшее решение в моей жизни. Энергия, фокус, тело — всё на другом уровне.»</p>
+          <div class="t-author">Илья, 34 года &middot; Дубай</div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-photo">
+          <div class="photo-placeholder">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:64px;color:#c9a96e;opacity:0.15;">А</div>
+          </div>
+          <!-- Replace with: <img src="photo-artem.jpg" alt="Артём"> -->
+        </div>
+        <div class="t-body">
+          <p class="t-quote">«Стойка на руках стала для меня не просто целью, а образом жизни.»</p>
+          <div class="t-author">Артём, 29 лет &middot; Москва</div>
+        </div>
+      </div>
+
+      <div class="t-card">
+        <div class="t-photo">
+          <div class="photo-placeholder">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:64px;color:#c9a96e;opacity:0.15;">Д</div>
+          </div>
+          <!-- Replace with: <img src="photo-denis.jpg" alt="Денис"> -->
+        </div>
+        <div class="t-body">
+          <p class="t-quote">«-11 кг жира за 3 месяца и +10 лет к жизни. Система работает.»</p>
+          <div class="t-author">Денис, 41 год &middot; Алматы</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── ABOUT ──────────────────────────── -->
+<section id="about">
+  <div class="container">
+    <div class="two-col">
+      <div class="col-text reveal">
+        <span class="label">Обо мне</span>
+        <h2>Andronik</h2>
+        <p class="name-sub">Гейвах Андроник Николаевич</p>
+        <ul class="about-list">
+          <li>350+ дней стойки на руках</li>
+          <li>5+ лет в теме здоровья и трансформации</li>
+          <li>10 лет ежедневной практики</li>
+          <li>Живу и работаю на Бали</li>
+          <li>Моя миссия — помочь тебе стать лучшей версией себя</li>
+        </ul>
+        <div class="about-stats">
+          <div class="about-stat">
+            <div class="about-stat-num">350+</div>
+            <div class="about-stat-label">дней стойки<br>на руках</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">80+</div>
+            <div class="about-stat-label">клиентов по<br>всему миру</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">5+</div>
+            <div class="about-stat-label">лет практики<br>ежедневно</div>
+          </div>
+          <div class="about-stat">
+            <div class="about-stat-num">100%</div>
+            <div class="about-stat-label">личная<br>вовлечённость</div>
+          </div>
+        </div>
+      </div>
+      <div class="about-visual reveal">
+        <div class="photo-placeholder">
+          <svg viewBox="0 0 100 100" width="180" xmlns="http://www.w3.org/2000/svg">
+            <g stroke="#c9a96e" stroke-width="0.5" fill="none">
+              <circle cx="50" cy="50" r="20"/><circle cx="70" cy="50" r="20"/>
+              <circle cx="60" cy="32.68" r="20"/><circle cx="40" cy="32.68" r="20"/>
+              <circle cx="30" cy="50" r="20"/><circle cx="40" cy="67.32" r="20"/>
+              <circle cx="60" cy="67.32" r="20"/><circle cx="50" cy="50" r="34.64"/>
+            </g>
+          </svg>
+        </div>
+        <!-- Replace with: <img src="photo-andronik-handstand.jpg" alt="Andronik"> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── CONTACT ──────────────────────────── -->
+<section id="contact">
+  <div class="container">
+    <div class="two-col">
+      <div class="col-text reveal">
+        <span class="label">Контакт</span>
+        <h2>Начни свою<br>трансформацию</h2>
+        <p class="sub">Оставь заявку — и мы свяжемся с тобой в течение 24 часов.</p>
+
+        <form id="lead-form" onsubmit="handleSubmit(event)">
+          <div class="form-field">
+            <input type="text" name="name" placeholder="Имя" required autocomplete="given-name">
+          </div>
+          <div class="form-field">
+            <input type="text" name="contact" placeholder="Telegram / WhatsApp" required>
+          </div>
+          <div class="form-field">
+            <input type="email" name="email" placeholder="E-mail (необязательно)" autocomplete="email">
+          </div>
+          <div class="form-field">
+            <select name="package">
+              <option value="" disabled selected>Какой пакет тебе интересует?</option>
+              <option>Базовый — $500/мес</option>
+              <option>С БАДами — $730/первый мес</option>
+              <option>Расширенный — $1 500/мес</option>
+              <option>+ Нутрициолог — $2 000/мес</option>
+              <option>+ Тренер онлайн — $3 000/мес</option>
+              <option>Годовой — $18 000/год</option>
+              <option>VIP — $30 000/мес</option>
+              <option>Пока не уверен</option>
+            </select>
+          </div>
+          <button type="submit" class="form-submit" id="submit-btn">Отправить заявку</button>
+          <p class="form-note">Все данные защищены. Мы не передаём информацию третьим лицам.</p>
+        </form>
+      </div>
+
+      <div class="contact-visual reveal">
+        <div class="photo-placeholder">
+          <div style="font-family:'Cormorant Garamond',serif;font-size:110px;color:#c9a96e;opacity:0.1;line-height:1;">A</div>
+        </div>
+        <!-- Replace with: <img src="photo-contact.jpg" alt="Andronik"> -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────── FOOTER ──────────────────────────── -->
+<footer>
+  <div class="footer-logo">FOREVER YOUNG</div>
+  <div class="footer-copy">Andronik &middot; Гейвах Андроник Николаевич &middot; Bali &middot; 2025</div>
+</footer>
+
+<script>
+  /* Smooth scroll helper */
+  function scrollTo(id) {
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+
+  /* Scroll-reveal */
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.reveal').forEach(el => revealObs.observe(el));
+
+  /* Nav link active state */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const navObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(a => {
+          a.style.color = a.getAttribute('href') === '#' + e.target.id
+            ? 'var(--text)' : '';
+        });
+      }
+    });
+  }, { threshold: 0.5 });
+  sections.forEach(s => navObs.observe(s));
+
+  /* Form submit */
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Заявка отправлена ✓';
+    btn.style.background = '#2a4030';
+    btn.style.color = 'var(--text)';
+    btn.disabled = true;
+    /*
+      To wire up a real backend, replace this with:
+      fetch('/your-endpoint', { method:'POST', body: new FormData(e.target) })
+      OR use Formspree: action="https://formspree.io/f/YOUR_ID" method="POST"
+    */
+    setTimeout(() => {
+      btn.textContent = 'Отправить заявку';
+      btn.style.background = 'var(--gold)';
+      btn.style.color = '#07060a';
+      btn.disabled = false;
+      e.target.reset();
+    }, 4000);
+  }
+</script>
+</body>
+</html>
