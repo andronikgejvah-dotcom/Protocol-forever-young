@@ -619,10 +619,10 @@
     <div id="summary-list"></div>
   </div>
 
-  <a href="https://t.me/andron_dicktatoora" class="cta-primary" target="_blank">
-    Написать Андронику в Telegram
+  <a id="tg-btn" href="https://t.me/andron_dicktatoora" class="cta-primary" target="_blank">
+    Отправить ответы Андронику →
   </a>
-  <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px">@andron_dicktatoora</p>
+  <p style="font-size:13px;color:var(--muted);text-align:center;margin-top:12px">Telegram откроется с готовым сообщением — просто нажми отправить</p>
 
 </div>
 
@@ -699,6 +699,22 @@
     document.getElementById('prog-fill').style.width = '100%';
     document.getElementById('prog-pct').textContent = '100%';
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Build Telegram message with all answers
+    const qLabels = [
+      "Возраст", "Курит", "Алкоголь", "Другие вещества", "Кофе",
+      "Сахар", "Питание", "Мясо", "Сон (часов)", "Просыпается",
+      "Тренировки", "Здоровье", "Травмы/операции", "Главная цель", "Запрос"
+    ];
+    let msg = "Привет! Прошёл анкету Forever Young:\n\n";
+    for (let i = 1; i <= TOTAL; i++) {
+      if (answers[i]) {
+        msg += `${i}. ${qLabels[i-1]}: ${answers[i]}\n`;
+      }
+    }
+    msg += "\nГотов к созвону!";
+    const tgUrl = "https://t.me/andron_dicktatoora?text=" + encodeURIComponent(msg);
+    document.getElementById('tg-btn').href = tgUrl;
   }
 </script>
 </body>
