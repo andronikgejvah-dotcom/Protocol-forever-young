@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Сценарии прогрева · Forever Young · Andronik</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600;700&family=DM+Sans:wght@400;500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #0e0c10;
+    color: #f0ece4;
+    font-family: 'DM Sans', sans-serif;
+    padding: 40px 20px;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .cover {
+    text-align: center;
+    padding: 80px 40px;
+    border-bottom: 1px solid #2a2530;
+    margin-bottom: 60px;
+  }
+
+  .cover h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 48px;
+    font-weight: 700;
+    color: #c9a96e;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .cover p {
+    font-size: 16px;
+    color: #888;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+  }
+
+  .schedule {
+    background: #18151f;
+    border: 1px solid #2a2530;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 60px;
+  }
+
+  .schedule h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    color: #c9a96e;
+    margin-bottom: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  td, th {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid #2a2530;
+    font-size: 14px;
+  }
+
+  th {
+    color: #c9a96e;
+    font-weight: 600;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  td:first-child { color: #888; white-space: nowrap; }
+
+  .video-block {
+    margin-bottom: 60px;
+    page-break-inside: avoid;
+  }
+
+  .video-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+    border-bottom: 1px solid #2a2530;
+    padding-bottom: 16px;
+  }
+
+  .video-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px;
+    font-weight: 700;
+    color: #2a2530;
+    line-height: 1;
+  }
+
+  .video-meta { flex: 1; }
+
+  .video-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #f0ece4;
+    line-height: 1.2;
+  }
+
+  .video-stage {
+    font-size: 12px;
+    color: #c9a96e;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-top: 4px;
+  }
+
+  .script-box {
+    background: #18151f;
+    border-left: 3px solid #c9a96e;
+    border-radius: 0 8px 8px 0;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+
+  .script-box p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: #e8e4dc;
+    margin-bottom: 14px;
+  }
+
+  .script-box p:last-child { margin-bottom: 0; }
+
+  .script-box .pause {
+    color: #888;
+    font-style: italic;
+    font-size: 14px;
+  }
+
+  .shoot-box {
+    background: #0e0c10;
+    border: 1px solid #2a2530;
+    border-radius: 8px;
+    padding: 20px 24px;
+  }
+
+  .shoot-box h4 {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: #c9a96e;
+    margin-bottom: 12px;
+  }
+
+  .shoot-box ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .shoot-box li {
+    font-size: 14px;
+    color: #aaa;
+    padding: 5px 0;
+    padding-left: 16px;
+    position: relative;
+  }
+
+  .shoot-box li::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    color: #c9a96e;
+  }
+
+  .day-badge {
+    display: inline-block;
+    background: #c9a96e;
+    color: #0e0c10;
+    font-size: 11px;
+    font-weight: 700;
+    padding: 3px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+  }
+
+  .launch-badge {
+    background: #e8534a;
+    color: #fff;
+  }
+
+  .shoot-table {
+    background: #18151f;
+    border: 1px solid #2a2530;
+    border-radius: 12px;
+    padding: 32px;
+    margin-top: 60px;
+  }
+
+  .footer {
+    text-align: center;
+    padding: 60px 0 40px;
+    color: #444;
+    font-size: 13px;
+  }
+
+  .footer span { color: #c9a96e; }
+
+  @media print {
+    body { background: #fff; color: #000; padding: 20px; }
+    .cover h1 { color: #8a6f3f; }
+    .video-num { color: #ddd; }
+    .script-box { background: #f9f7f4; border-left-color: #8a6f3f; }
+    .script-box p { color: #111; }
+    .script-box .pause { color: #666; }
+    .shoot-box { background: #fff; border-color: #ddd; }
+    .shoot-box li { color: #444; }
+    .shoot-box li::before { color: #8a6f3f; }
+    .shoot-box h4 { color: #8a6f3f; }
+    .day-badge { background: #8a6f3f; }
+    .video-stage { color: #8a6f3f; }
+    .schedule { background: #f9f7f4; border-color: #ddd; }
+    .schedule h2 { color: #8a6f3f; }
+    th { color: #8a6f3f; }
+    td { color: #222; }
+    td:first-child { color: #666; }
+    .shoot-table { background: #f9f7f4; border-color: #ddd; }
+    .footer { color: #999; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <h1>Forever Young<br>Сценарии прогрева</h1>
+  <p>Andronik · День 365 · Лонч первого потока</p>
+</div>
+
+<div class="schedule">
+  <h2>Расписание публикаций</h2>
+  <table>
+    <tr><th>День</th><th>Видео</th><th>Платформы</th></tr>
+    <tr><td>День 361</td><td>#0 — Origin Story · «Два типа мужчин»</td><td>TG + Instagram + TikTok</td></tr>
+    <tr><td>День 362</td><td>#1 — «362 дня подряд»</td><td>TG + Instagram + TikTok</td></tr>
+    <tr><td>День 363</td><td>#2 — «Почему стареют неправильно»</td><td>TG + Instagram + TikTok</td></tr>
+    <tr><td>День 364</td><td>#3 — «10 лет системы»</td><td>TG + Instagram + TikTok</td></tr>
+    <tr><td>День 365 🔥</td><td>#4 — ЛОНЧ · Первый поток</td><td>TG канал + личные сообщения</td></tr>
+  </table>
+</div>
+
+<!-- VIDEO 0 -->
+<div class="video-block">
+  <div class="day-badge">День 361</div>
+  <div class="video-header">
+    <div class="video-num">0</div>
+    <div class="video-meta">
+      <div class="video-title">Origin Story</div>
+      <div class="video-stage">Стадия: Неосведомлённый · Посеять вопрос через историю</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <p>Я из военного рода.</p>
+    <p>На семейных праздниках я видел два типа мужчин — большие и толстые, и стройные, в хорошей спортивной форме.</p>
+    <p>Уже тогда я знал к какому лагерю присоединюсь.</p>
+    <p>В 14 лет сделал штангу из палки и пластиковых бутылок — качался всё лето. В университете начал изучать йогу, китайский массаж, танцы, акупрессуру — жил в Дубае, Москве, Бали, собирал систему всю жизнь.</p>
+    <p>Следующие 3 дня покажу что из этого получилось.</p>
+  </div>
+
+  <div class="shoot-box">
+    <h4>План съёмки</h4>
+    <ul>
+      <li>Сидишь, прямо в камеру, крупный план лица</li>
+      <li>Пауза после «военного рода» — дай секунду тишины</li>
+      <li>Говоришь спокойно, как другу, без суеты</li>
+      <li>Без музыки в начале</li>
+      <li>Длина: 40–50 сек</li>
+    </ul>
+  </div>
+</div>
+
+<!-- VIDEO 1 -->
+<div class="video-block">
+  <div class="day-badge">День 362</div>
+  <div class="video-header">
+    <div class="video-num">1</div>
+    <div class="video-meta">
+      <div class="video-title">362 дня подряд</div>
+      <div class="video-stage">Стадия: Неосведомлённый · Зацепить фактом</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <p>362 дня подряд. Каждый день. Ни одного пропуска.</p>
+    <p>Была авария на байке. Разбитая нога. Температура. Всё на видео.</p>
+    <p>Я всё равно вставал на руки.</p>
+    <p>Не потому что псих — потому что система работает даже когда ты не можешь.</p>
+    <p>Следующие 3 дня покажу эту систему. Бесплатно. Всё.</p>
+  </div>
+
+  <div class="shoot-box">
+    <h4>План съёмки</h4>
+    <ul>
+      <li>Открываешь кадром стойки на руках — рассвет Бали</li>
+      <li>Разворачиваешься в камеру, говоришь стоя</li>
+      <li>B-roll: архив с байком если есть</li>
+      <li>Длина: 30–40 сек</li>
+    </ul>
+  </div>
+</div>
+
+<!-- VIDEO 2 -->
+<div class="video-block">
+  <div class="day-badge">День 363</div>
+  <div class="video-header">
+    <div class="video-num">2</div>
+    <div class="video-meta">
+      <div class="video-title">Почему стареют неправильно</div>
+      <div class="video-stage">Стадия: Осознание проблемы · Назвать боль + дать инструмент</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <p>Большинство людей в 35 начинают стареть. Просыпаются уставшими. Спина болит без причины. Пробуют зал, диеты, йогу — через месяц откат.</p>
+    <p>Проблема не в лени. Никто не учил работать с телом как с системой.</p>
+    <p>Один инструмент прямо сейчас — техника 5-10-15.</p>
+    <p>5 глубоких медленных вдохов и выдохов — задержка дыхания 30 секунд. 10 вдохов и выдохов — задержка 30 секунд. 15 вдохов и выдохов — задержка сколько можешь.</p>
+    <p>Успокаивает нервную систему лучше любого успокоительного. Делай утром.</p>
+    <p>Завтра покажу откуда берётся вся система.</p>
+  </div>
+
+  <div class="shoot-box">
+    <h4>План съёмки</h4>
+    <ul>
+      <li>Говоришь стоя или сидя, энергично</li>
+      <li>Когда перечисляешь 5-10-15 — показываешь пальцами</li>
+      <li>Потом показываешь как делаешь сам — сидишь, задержка дыхания, камера на лицо крупно</li>
+      <li>Длина: 50–60 сек</li>
+    </ul>
+  </div>
+</div>
+
+<!-- VIDEO 3 -->
+<div class="video-block">
+  <div class="day-badge">День 364</div>
+  <div class="video-header">
+    <div class="video-num">3</div>
+    <div class="video-meta">
+      <div class="video-title">10 лет системы</div>
+      <div class="video-stage">Стадия: Осознание решения · Показать механизм и экспертизу</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <p>10 лет. Университет — китайская медицина, акупрессура, йога, движение, танцы. Потом Дубай, Москва, Бали. Тренеры-друзья по всему миру.</p>
+    <p>Я не читал про это в книгах — я жил в этом.</p>
+    <p>Все эти практики работают. Но только когда это система, а не рандомные упражнения.</p>
+    <p>Вот одна точка прямо сейчас — Хэ-гу. Между большим и указательным пальцем. Нажми, держи 30 секунд. Убирает воспаление, даёт энергию.</p>
+    <p>Завтра — День 365. Расскажу кое-что важное.</p>
+  </div>
+
+  <div class="shoot-box">
+    <h4>План съёмки</h4>
+    <ul>
+      <li>Стоишь, природа Бали на фоне</li>
+      <li>Крупный план руки когда показываешь Хэ-гу — оператор зумит</li>
+      <li>Пауза перед «завтра день 365» — дай зрителю почувствовать</li>
+      <li>Длина: 50–60 сек</li>
+    </ul>
+  </div>
+</div>
+
+<!-- VIDEO 4 -->
+<div class="video-block">
+  <div class="day-badge launch-badge">День 365 · ЛОНЧ 🔥</div>
+  <div class="video-header">
+    <div class="video-num">4</div>
+    <div class="video-meta">
+      <div class="video-title">Первый поток открыт</div>
+      <div class="video-stage">Стадия: Максимальная осведомлённость · Прямая продажа</div>
+    </div>
+  </div>
+
+  <div class="script-box">
+    <p>Сегодня День 365. Год без пропусков.</p>
+    <p>Авария на байке, сломанная нога, температура — я не остановился.</p>
+    <p>Открываю первый поток. 4 места.</p>
+    <p>Два Zoom — сначала диагностирую тебя, потом показываю твою утреннюю практику. Всё.</p>
+    <p>$500. Два основателя. Пиши @andron_dicktatoora — слово FOREVER.</p>
+  </div>
+
+  <div class="shoot-box">
+    <h4>План съёмки</h4>
+    <ul>
+      <li>Открываешь лучшим кадром стойки — рассвет, самый красивый из всего года</li>
+      <li>Садишься, смотришь в камеру спокойно и уверенно</li>
+      <li>Текст на экране в конце: $500 · @andron_dicktatoora · FOREVER</li>
+      <li>Публикуешь только в Telegram — тёплая аудитория</li>
+      <li>Длина: 20–30 сек</li>
+    </ul>
+  </div>
+</div>
+
+<!-- SHOOT SCHEDULE -->
+<div class="shoot-table">
+  <h2 style="font-family:'Cormorant Garamond',serif;font-size:24px;color:#c9a96e;margin-bottom:20px;">Порядок съёмки · Одно утро</h2>
+  <table>
+    <tr><th>Время</th><th>Что снимаем</th></tr>
+    <tr><td>06:00</td><td>Стойка на руках — рассвет, лучший кадр (для #1 и #4)</td></tr>
+    <tr><td>06:30</td><td>Видео #4 — Лонч · пока эмоция от утра живая</td></tr>
+    <tr><td>07:00</td><td>Видео #0 — Origin Story</td></tr>
+    <tr><td>07:20</td><td>Видео #1 — День 362</td></tr>
+    <tr><td>07:40</td><td>Видео #2 — Проблема + дыхание 5-10-15</td></tr>
+    <tr><td>08:00</td><td>Видео #3 — Система + точка Хэ-гу крупным планом</td></tr>
+    <tr><td>08:20</td><td>B-roll запас — движение, руки, Бали, взгляды</td></tr>
+  </table>
+</div>
+
+<div class="footer">
+  Forever Young · <span>andronik.pro</span> · @andron_dicktatoora
+</div>
+
+</body>
+</html>
