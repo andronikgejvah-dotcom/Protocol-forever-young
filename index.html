@@ -1368,7 +1368,7 @@
     <li><a href="#community">Комьюнити</a></li>
     <li><a href="#contact">Контакты</a></li>
   </ul>
-  <button class="nav-cta" onclick="scrollTo('contact')">Начать</button>
+  <button class="nav-cta" onclick="window.open('https://andronik.pro/quiz.html','_blank')">Начать →</button>
 </nav>
 
 <!-- ──────────────────────────── HERO ──────────────────────────── -->
@@ -1395,7 +1395,7 @@
     <p class="hero-desc">Это не фитнес. Это система, которая меняет твоё тело, энергию и привычки навсегда.</p>
 
     <div class="hero-btns">
-      <button class="btn-primary" onclick="scrollTo('contact')">Начать трансформацию</button>
+      <button class="btn-primary" onclick="window.open('https://andronik.pro/quiz.html','_blank')">Заполнить анкету →</button>
       <button class="btn-outline" onclick="scrollTo('system')">Узнать больше</button>
     </div>
 
@@ -1562,7 +1562,7 @@
     </div>
 
     <div class="pkg-table-cta reveal">
-      <button class="btn-primary" onclick="scrollTo('contact')">Выбрать пакет</button>
+      <button class="btn-primary" onclick="window.open('https://andronik.pro/quiz.html','_blank')">Заполнить анкету →</button>
     </div>
   </div>
 </section>
@@ -1584,7 +1584,7 @@
           <li>Повторный тест через 3 месяца — корректировка всего плана</li>
           <li>Accountability в Telegram: 3 раза в неделю + дневник питания (фото еды)</li>
         </ul>
-        <button class="btn-primary" onclick="scrollTo('contact')">Выбрать программу</button>
+        <button class="btn-primary" onclick="window.open('https://andronik.pro/quiz.html','_blank')">Заполнить анкету →</button>
         <div class="who-box">
           <div class="who-box-label">Кто проводит сессии?</div>
           <p>Партнёр-нутрициолог — сертифицированный специалист, работающий под кураторством Andronik. Клиент получает профессиональную консультацию, Andronik контролирует общее направление и следит за результатами.</p>
@@ -1620,7 +1620,7 @@
           <li>Еженедельная обратная связь от тренера</li>
           <li>Контроль системы и результаты от Andronik</li>
         </ul>
-        <button class="btn-primary" onclick="scrollTo('contact')">Выбрать программу</button>
+        <button class="btn-primary" onclick="window.open('https://andronik.pro/quiz.html','_blank')">Заполнить анкету →</button>
         <div class="who-box">
           <div class="who-box-label">Кто проводит тренировки?</div>
           <p>Партнёр-тренер — специалист отобранный и обученный Andronik. Работает по его методологии и под его кураторством.</p>
@@ -1916,56 +1916,22 @@
 <!-- ──────────────────────────── CONTACT ──────────────────────────── -->
 <section id="contact">
   <div class="container">
-    <div class="two-col">
-      <div class="col-text reveal">
-        <span class="label">Контакт</span>
-        <h2>Начни свою<br>трансформацию</h2>
-        <p class="sub">Оставь заявку — и мы свяжемся с тобой в течение 24 часов.</p>
-
-        <form id="lead-form" onsubmit="handleSubmit(event)">
-          <div class="form-field">
-            <input type="text" name="name" placeholder="Имя" required autocomplete="given-name">
-          </div>
-          <div class="form-field">
-            <input type="text" name="contact" placeholder="Telegram / WhatsApp" required>
-          </div>
-          <div class="form-field">
-            <input type="email" name="email" placeholder="E-mail (необязательно)" autocomplete="email">
-          </div>
-          <div class="form-field">
-            <select name="package">
-              <option value="" disabled selected>Какой пакет тебе интересует?</option>
-              <option>Базовый — $500/мес</option>
-              <option>С БАДами — $730/первый мес</option>
-              <option>Расширенный — $1 500/мес</option>
-              <option>+ Нутрициолог — $2 000/мес</option>
-              <option>+ Тренер онлайн — $3 000/мес</option>
-              <option>+ Тренер офлайн в моём городе — от $3 000/мес</option>
-              <option>Годовой — $18 000/год</option>
-              <option>VIP — $30 000/мес</option>
-              <option>Пока не уверен</option>
-            </select>
-          </div>
-          <button type="submit" class="form-submit" id="submit-btn">Отправить заявку</button>
-          <p class="form-note">Все данные защищены. Мы не передаём информацию третьим лицам.</p>
-          <div style="margin-top:20px;padding-top:20px;border-top:1px solid var(--border);text-align:center;">
-            <p style="font-size:11px;color:var(--text-dim);margin-bottom:12px;">Или напиши напрямую в Telegram</p>
-            <a class="btn-tg" onclick="openTelegramDM(); return false;" href="#" style="display:inline-flex;font-size:12px;padding:12px 24px;">
-              <svg width="18" height="15" viewBox="0 0 20 17" fill="none" style="margin-right:8px">
-                <path d="M18.9 0.847L16.07 15.15c-.21 1.01-.76 1.26-1.54.78l-4.25-3.13-2.05 1.97c-.23.23-.42.42-.86.42l.31-4.33 7.93-7.16c.34-.31-.08-.48-.53-.17L4.48 9.87.29 8.58c-.9-.28-.92-.9.19-1.33L17.62.13c.75-.28 1.41.17 1.28 1.32v-.61z" fill="white"/>
-              </svg>
-              @andron_dicktatoora
-            </a>
-          </div>
-        </form>
-      </div>
-
-      <div class="contact-visual reveal">
-        <div class="photo-placeholder">
-          <div style="font-family:'Cormorant Garamond',serif;font-size:110px;color:#c9a96e;opacity:0.1;line-height:1;">A</div>
-        </div>
-        <!-- Replace with: <img src="photo-contact.jpg" alt="Andronik"> -->
-      </div>
+    <div class="header reveal" style="text-align:center;max-width:560px;margin:0 auto 48px;">
+      <span class="label">Контакт</span>
+      <h2 class="section-title" style="margin-bottom:16px">Начни прямо сейчас</h2>
+      <p style="font-size:15px;color:var(--text-mid);line-height:1.7">Заполни анкету за 3 минуты — изучу твой профиль и напишу лично. Или пиши сразу в Telegram.</p>
+    </div>
+    <div class="reveal" style="display:flex;flex-direction:column;align-items:center;gap:16px;max-width:400px;margin:0 auto;">
+      <a href="https://andronik.pro/quiz.html" style="display:block;width:100%;padding:18px 24px;background:var(--gold);color:#07060a;border-radius:8px;font-weight:700;text-decoration:none;font-family:var(--sans);font-size:16px;text-align:center;">
+        Заполнить анкету →
+      </a>
+      <a href="https://t.me/andron_dicktatoora" target="_blank" class="btn-tg" style="width:100%;justify-content:center;font-size:15px;padding:16px 24px;">
+        <svg width="18" height="15" viewBox="0 0 20 17" fill="none" style="margin-right:8px">
+          <path d="M18.9 0.847L16.07 15.15c-.21 1.01-.76 1.26-1.54.78l-4.25-3.13-2.05 1.97c-.23.23-.42.42-.86.42l.31-4.33 7.93-7.16c.34-.31-.08-.48-.53-.17L4.48 9.87.29 8.58c-.9-.28-.92-.9.19-1.33L17.62.13c.75-.28 1.41.17 1.28 1.32v-.61z" fill="white"/>
+        </svg>
+        Написать в Telegram
+      </a>
+      <p style="font-size:12px;color:var(--text-dim);text-align:center;">@andron_dicktatoora</p>
     </div>
   </div>
 </section>
