@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Диагностика · Forever Young · Andronik</title>
+<style>
+  :root {
+    --bg: #07060a;
+    --card: #111018;
+    --border: #2a2530;
+    --gold: #c9a96e;
+    --text: #f0ece4;
+    --muted: #7a7060;
+    --dim: #4a4030;
+    --red: #e8534a;
+    --green: #4caf82;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, 'DM Sans', sans-serif;
+    font-size: 17px;
+    line-height: 1.6;
+    padding-bottom: 80px;
+  }
+
+  header {
+    background: #111018;
+    border-bottom: 1px solid var(--border);
+    padding: 20px 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .logo { font-size: 13px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; }
+  .client-name-wrap { display: flex; align-items: center; gap: 12px; }
+  .client-name-wrap input {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    font-size: 16px;
+    border-radius: 6px;
+    width: 220px;
+    outline: none;
+  }
+  .client-name-wrap input:focus { border-color: var(--gold); }
+
+  .container { max-width: 860px; margin: 0 auto; padding: 32px 24px; }
+
+  .section {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 28px 32px;
+    margin-bottom: 20px;
+  }
+  .section-title {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 24px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .field { margin-bottom: 20px; }
+  .field:last-child { margin-bottom: 0; }
+
+  label {
+    display: block;
+    font-size: 15px;
+    color: var(--muted);
+    margin-bottom: 8px;
+    font-weight: 400;
+  }
+
+  input[type="text"],
+  input[type="number"],
+  textarea,
+  select {
+    width: 100%;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 12px 16px;
+    font-size: 17px;
+    border-radius: 6px;
+    outline: none;
+    font-family: inherit;
+    transition: border-color 0.2s;
+    -webkit-appearance: none;
+  }
+  input:focus, textarea:focus, select:focus { border-color: var(--gold); }
+  textarea { min-height: 80px; resize: vertical; }
+  select option { background: #18151f; }
+
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .three-col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 4px; }
+  .chip {
+    padding: 8px 16px;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    font-size: 15px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    user-select: none;
+  }
+  .chip:hover { border-color: var(--gold); color: var(--text); }
+  .chip.active { border-color: var(--gold); background: rgba(201,169,110,0.12); color: var(--gold); }
+  .chip.red.active { border-color: var(--red); background: rgba(232,83,74,0.1); color: var(--red); }
+
+  .scale { display: flex; gap: 8px; margin-top: 4px; }
+  .scale-btn {
+    flex: 1;
+    padding: 10px 4px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-align: center;
+    font-size: 15px;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+  }
+  .scale-btn:hover { border-color: var(--gold); color: var(--text); }
+  .scale-btn.active { border-color: var(--gold); background: rgba(201,169,110,0.12); color: var(--gold); font-weight: 600; }
+
+  .copy-btn {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    background: var(--gold);
+    color: #07060a;
+    border: none;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 24px rgba(201,169,110,0.3);
+    transition: transform 0.2s, opacity 0.2s;
+    font-family: inherit;
+  }
+  .copy-btn:hover { transform: scale(1.04); opacity: 0.9; }
+  .copy-btn:active { transform: scale(0.97); }
+
+  .result-box {
+    display: none;
+    background: #0e0c14;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    padding: 24px;
+    margin-top: 24px;
+    font-size: 14px;
+    color: var(--text);
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .clear-btn {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--muted);
+    padding: 8px 20px;
+    border-radius: 6px;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: border-color 0.2s;
+  }
+  .clear-btn:hover { border-color: var(--red); color: var(--red); }
+
+  @media (max-width: 600px) {
+    .two-col, .three-col { grid-template-columns: 1fr; }
+    .section { padding: 20px 18px; }
+    header { padding: 14px 18px; }
+    .client-name-wrap input { width: 160px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">Forever Young · Диагностика</div>
+  <div class="client-name-wrap">
+    <input type="text" id="client-name" placeholder="Имя клиента...">
+    <button class="clear-btn" onclick="clearAll()">Очистить</button>
+  </div>
+</header>
+
+<div class="container">
+
+  <!-- 1. БАЗОВЫЕ ДАННЫЕ -->
+  <div class="section">
+    <div class="section-title">1 · Базовые данные</div>
+    <div class="three-col">
+      <div class="field">
+        <label>Возраст</label>
+        <input type="number" id="age" placeholder="лет">
+      </div>
+      <div class="field">
+        <label>Пол</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'sex')">Мужчина</div>
+          <div class="chip" onclick="chip(this,'sex')">Женщина</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Рост / Вес</label>
+        <input type="text" id="body" placeholder="180 см / 80 кг">
+      </div>
+    </div>
+    <div class="three-col" style="margin-top:16px">
+      <div class="field">
+        <label>Бицепс (пик)</label>
+        <input type="text" id="m-bicep" placeholder="см">
+      </div>
+      <div class="field">
+        <label>Грудь</label>
+        <input type="text" id="m-chest" placeholder="см">
+      </div>
+      <div class="field">
+        <label>Талия</label>
+        <input type="text" id="m-waist" placeholder="см">
+      </div>
+      <div class="field">
+        <label>Бёдра</label>
+        <input type="text" id="m-hips" placeholder="см">
+      </div>
+      <div class="field">
+        <label>Нога (бедро)</label>
+        <input type="text" id="m-leg" placeholder="см">
+      </div>
+      <div class="field">
+        <label>Вес</label>
+        <input type="text" id="m-weight" placeholder="кг">
+      </div>
+    </div>
+  </div>
+
+  <!-- 2. ОБРАЗ ЖИЗНИ -->
+  <div class="section">
+    <div class="section-title">2 · Образ жизни</div>
+    <div class="two-col">
+      <div class="field">
+        <label>Работа</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'work')">Сидячая</div>
+          <div class="chip" onclick="chip(this,'work')">Смешанная</div>
+          <div class="chip" onclick="chip(this,'work')">Физическая</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Уровень стресса</label>
+        <div class="scale">
+          <div class="scale-btn" onclick="scale(this,'stress')">1</div>
+          <div class="scale-btn" onclick="scale(this,'stress')">2</div>
+          <div class="scale-btn" onclick="scale(this,'stress')">3</div>
+          <div class="scale-btn" onclick="scale(this,'stress')">4</div>
+          <div class="scale-btn" onclick="scale(this,'stress')">5</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Сон (часов в сутки)</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'sleep')">менее 5</div>
+          <div class="chip" onclick="chip(this,'sleep')">5–6</div>
+          <div class="chip" onclick="chip(this,'sleep')">7–8</div>
+          <div class="chip" onclick="chip(this,'sleep')">больше 8</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Просыпается</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'wakeup')">Легко, бодрым</div>
+          <div class="chip" onclick="chip(this,'wakeup')">Тяжело, разбитым</div>
+          <div class="chip" onclick="chip(this,'wakeup')">По-разному</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Энергия в течение дня</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'energy')">Стабильная</div>
+          <div class="chip" onclick="chip(this,'energy')">Спад после обеда</div>
+          <div class="chip" onclick="chip(this,'energy')">Постоянная усталость</div>
+          <div class="chip" onclick="chip(this,'energy')">Скачет</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Тренировки сейчас</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'training')">Не тренируется</div>
+          <div class="chip" onclick="chip(this,'training')">1–2 раза/нед</div>
+          <div class="chip" onclick="chip(this,'training')">3–4 раза/нед</div>
+          <div class="chip" onclick="chip(this,'training')">Каждый день</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. ПИТАНИЕ -->
+  <div class="section">
+    <div class="section-title">3 · Питание</div>
+    <div class="two-col">
+      <div class="field">
+        <label>Тип питания</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'diet')">Всеядный</div>
+          <div class="chip" onclick="chip(this,'diet')">Флекситарианец</div>
+          <div class="chip" onclick="chip(this,'diet')">Вегетарианец</div>
+          <div class="chip" onclick="chip(this,'diet')">Веган</div>
+          <div class="chip" onclick="chip(this,'diet')">Кето</div>
+          <div class="chip" onclick="chip(this,'diet')">Другое</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Мясо</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'meat')">Ежедневно</div>
+          <div class="chip" onclick="chip(this,'meat')">Несколько раз/нед</div>
+          <div class="chip" onclick="chip(this,'meat')">Редко</div>
+          <div class="chip" onclick="chip(this,'meat')">Не ем</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Сахар / сладкое</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'sugar')">Каждый день</div>
+          <div class="chip" onclick="chip(this,'sugar')">Иногда</div>
+          <div class="chip" onclick="chip(this,'sugar')">Редко</div>
+          <div class="chip" onclick="chip(this,'sugar')">Не ем</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Молочные продукты</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'dairy')">Ежедневно</div>
+          <div class="chip" onclick="chip(this,'dairy')">Иногда</div>
+          <div class="chip" onclick="chip(this,'dairy')">Не ем</div>
+          <div class="chip" onclick="chip(this,'dairy')">Непереносимость</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Глютен (хлеб, паста)</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'gluten')">Ем нормально</div>
+          <div class="chip" onclick="chip(this,'gluten')">Ограничиваю</div>
+          <div class="chip" onclick="chip(this,'gluten')">Непереносимость</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Кофе</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'coffee')">Не пью</div>
+          <div class="chip" onclick="chip(this,'coffee')">1 чашка</div>
+          <div class="chip" onclick="chip(this,'coffee')">2–3 чашки</div>
+          <div class="chip" onclick="chip(this,'coffee')">3+ чашек</div>
+        </div>
+      </div>
+    </div>
+    <div class="field" style="margin-top:16px">
+      <label>Пищевые аллергии / непереносимости</label>
+      <input type="text" id="allergies" placeholder="орехи, морепродукты, яйца...">
+    </div>
+    <div class="field">
+      <label>Как питается в целом (своими словами)</label>
+      <textarea id="diet-notes" placeholder="регулярно / нерегулярно, что обычно ест..."></textarea>
+    </div>
+  </div>
+
+  <!-- 4. ВРЕДНЫЕ ПРИВЫЧКИ -->
+  <div class="section">
+    <div class="section-title">4 · Вредные привычки</div>
+    <div class="three-col">
+      <div class="field">
+        <label>Курение</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'smoke')">Не курит</div>
+          <div class="chip red" onclick="chip(this,'smoke')">Курит</div>
+          <div class="chip red" onclick="chip(this,'smoke')">Бросил</div>
+          <div class="chip red" onclick="chip(this,'smoke')">Вейп</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Алкоголь</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'alcohol')">Не пьёт</div>
+          <div class="chip" onclick="chip(this,'alcohol')">Редко</div>
+          <div class="chip red" onclick="chip(this,'alcohol')">1–2 раза/нед</div>
+          <div class="chip red" onclick="chip(this,'alcohol')">Часто</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Другие вещества</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'drugs')">Нет</div>
+          <div class="chip red" onclick="chip(this,'drugs')">Иногда</div>
+          <div class="chip red" onclick="chip(this,'drugs')">Регулярно</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. ЗДОРОВЬЕ -->
+  <div class="section">
+    <div class="section-title">5 · Здоровье</div>
+    <div class="two-col">
+      <div class="field">
+        <label>Хронические заболевания</label>
+        <textarea id="chronic" placeholder="диабет, гипертония, щитовидка..."></textarea>
+      </div>
+      <div class="field">
+        <label>Травмы / операции</label>
+        <textarea id="injuries" placeholder="колени, спина, суставы..."></textarea>
+      </div>
+      <div class="field">
+        <label>Текущие медикаменты</label>
+        <textarea id="meds" placeholder="название препаратов..."></textarea>
+      </div>
+      <div class="field">
+        <label>Текущие БАДы</label>
+        <textarea id="current-supps" placeholder="что уже принимает..."></textarea>
+      </div>
+    </div>
+
+    <div class="field" style="margin-top:8px">
+      <label>Симптомы (отметь всё что есть)</label>
+      <div class="chips" id="symptoms-chips">
+        <div class="chip" onclick="toggle(this)">Усталость</div>
+        <div class="chip" onclick="toggle(this)">Плохой сон</div>
+        <div class="chip" onclick="toggle(this)">Выпадение волос</div>
+        <div class="chip" onclick="toggle(this)">Ломкие ногти</div>
+        <div class="chip" onclick="toggle(this)">Сухая кожа</div>
+        <div class="chip" onclick="toggle(this)">Акне / воспаления</div>
+        <div class="chip" onclick="toggle(this)">Боли в суставах</div>
+        <div class="chip" onclick="toggle(this)">Боль в спине</div>
+        <div class="chip" onclick="toggle(this)">Слабый иммунитет</div>
+        <div class="chip" onclick="toggle(this)">Частые простуды</div>
+        <div class="chip" onclick="toggle(this)">Вздутие живота</div>
+        <div class="chip" onclick="toggle(this)">Нарушение пищеварения</div>
+        <div class="chip" onclick="toggle(this)">Низкое либидо</div>
+        <div class="chip" onclick="toggle(this)">Тревожность</div>
+        <div class="chip" onclick="toggle(this)">Туман в голове</div>
+        <div class="chip" onclick="toggle(this)">Отёки</div>
+        <div class="chip" onclick="toggle(this)">Холодные руки/ноги</div>
+        <div class="chip" onclick="toggle(this)">Частые головные боли</div>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Анализы крови (если есть — что известно)</label>
+      <textarea id="bloodwork" placeholder="D3, B12, ферритин, магний, гормоны..."></textarea>
+    </div>
+  </div>
+
+  <!-- 6. ПИЩЕВАРЕНИЕ -->
+  <div class="section">
+    <div class="section-title">6 · Пищеварение</div>
+    <div class="two-col">
+      <div class="field">
+        <label>Работа кишечника</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'gut')">Регулярно, нормально</div>
+          <div class="chip" onclick="chip(this,'gut')">Вздутие / газы</div>
+          <div class="chip" onclick="chip(this,'gut')">Запоры</div>
+          <div class="chip" onclick="chip(this,'gut')">Диарея</div>
+          <div class="chip" onclick="chip(this,'gut')">Чередуется</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Чувствует после еды</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'after-eat')">Лёгкость</div>
+          <div class="chip" onclick="chip(this,'after-eat')">Тяжесть</div>
+          <div class="chip" onclick="chip(this,'after-eat')">Сонливость</div>
+          <div class="chip" onclick="chip(this,'after-eat')">Вздутие</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. КОЖА И ЛИЦО -->
+  <div class="section">
+    <div class="section-title">7 · Кожа и лицо</div>
+    <div class="two-col">
+      <div class="field">
+        <label>Тип кожи лица</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'skin')">Нормальная</div>
+          <div class="chip" onclick="chip(this,'skin')">Сухая</div>
+          <div class="chip" onclick="chip(this,'skin')">Жирная</div>
+          <div class="chip" onclick="chip(this,'skin')">Комбинированная</div>
+          <div class="chip" onclick="chip(this,'skin')">Чувствительная</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Проблемы с кожей</label>
+        <div class="chips" id="skin-issues">
+          <div class="chip" onclick="toggle(this)">Акне</div>
+          <div class="chip" onclick="toggle(this)">Морщины</div>
+          <div class="chip" onclick="toggle(this)">Пигментация</div>
+          <div class="chip" onclick="toggle(this)">Купероз</div>
+          <div class="chip" onclick="toggle(this)">Отёки лица</div>
+          <div class="chip" onclick="toggle(this)">Дряблость</div>
+          <div class="chip" onclick="toggle(this)">Нет проблем</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Интерес к Face Building</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'fb')">Да, главная цель</div>
+          <div class="chip" onclick="chip(this,'fb')">Да, как дополнение</div>
+          <div class="chip" onclick="chip(this,'fb')">Пока нет</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Что хочет улучшить в лице</label>
+        <textarea id="face-goal" placeholder="линия челюсти, второй подбородок, скулы, морщины..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. ЦЕЛИ -->
+  <div class="section">
+    <div class="section-title">8 · Цели и мотивация</div>
+    <div class="field">
+      <label>Главная цель</label>
+      <div class="chips">
+        <div class="chip" onclick="toggle(this)">Похудеть</div>
+        <div class="chip" onclick="toggle(this)">Набрать мышцы</div>
+        <div class="chip" onclick="toggle(this)">Рельеф</div>
+        <div class="chip" onclick="toggle(this)">Больше энергии</div>
+        <div class="chip" onclick="toggle(this)">Здоровье изнутри</div>
+        <div class="chip" onclick="toggle(this)">Лицо и внешность</div>
+        <div class="chip" onclick="toggle(this)">Антивозрастное</div>
+        <div class="chip" onclick="toggle(this)">Всё вместе</div>
+      </div>
+    </div>
+    <div class="two-col" style="margin-top:16px">
+      <div class="field">
+        <label>Конкретный запрос (его словами)</label>
+        <textarea id="client-goal" placeholder="хочу грудь и спину больше, убрать живот..."></textarea>
+      </div>
+      <div class="field">
+        <label>Почему сейчас? Что триггернуло</label>
+        <textarea id="trigger" placeholder="свадьба, устал смотреть на себя, врач сказал..."></textarea>
+      </div>
+      <div class="field">
+        <label>Бюджет на БАДы в месяц</label>
+        <div class="chips">
+          <div class="chip" onclick="chip(this,'budget')">до $30</div>
+          <div class="chip" onclick="chip(this,'budget')">$30–70</div>
+          <div class="chip" onclick="chip(this,'budget')">$70–150</div>
+          <div class="chip" onclick="chip(this,'budget')">без ограничений</div>
+        </div>
+      </div>
+      <div class="field">
+        <label>Пробовал раньше что-то подобное?</label>
+        <textarea id="tried" placeholder="зал, диеты, тренер, БАДы — что и почему бросил..."></textarea>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9. ЗАМЕТКИ -->
+  <div class="section">
+    <div class="section-title">9 · Заметки Андроника</div>
+    <div class="field">
+      <label>Впечатление от человека</label>
+      <textarea id="impression" placeholder="мотивирован / нет, серьёзный / поверхностный..."></textarea>
+    </div>
+    <div class="field">
+      <label>БАДы которые выписать</label>
+      <textarea id="supps-prescribed" placeholder="D3, магний, коллаген, омега-3, пробиотик..."></textarea>
+    </div>
+    <div class="field">
+      <label>Упор в тренировках</label>
+      <textarea id="training-focus" placeholder="грудь и спина, ноги, кор..."></textarea>
+    </div>
+    <div class="field">
+      <label>Особые ограничения / противопоказания</label>
+      <textarea id="restrictions" placeholder="нельзя нагружать колено, аллергия на рыбий жир..."></textarea>
+    </div>
+    <div class="field">
+      <label>Дополнительно</label>
+      <textarea id="extra" placeholder="всё что важно помнить..."></textarea>
+    </div>
+  </div>
+
+  <div id="result-box" class="result-box"></div>
+
+</div>
+
+<button class="copy-btn" onclick="copyResult()">📋 Скопировать профиль</button>
+
+<script>
+  const chipData = {};
+
+  function chip(el, group) {
+    document.querySelectorAll(`.chip[onclick*="chip(this,'${group}')"]`).forEach(c => c.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function toggle(el) {
+    el.classList.toggle('active');
+  }
+
+  function scale(el, group) {
+    el.closest('.scale').querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function getChips(group) {
+    return [...document.querySelectorAll(`.chip[onclick*="'${group}'"].active`)].map(c => c.textContent.trim()).join(', ') || '—';
+  }
+
+  function getToggled(container) {
+    return [...document.querySelectorAll(`#${container} .chip.active`)].map(c => c.textContent.trim()).join(', ') || '—';
+  }
+
+  function getAllToggles(label) {
+    const chips = [...document.querySelectorAll(`.chip[onclick="toggle(this)"].active`)];
+    return chips.map(c => c.textContent.trim()).join(', ') || '—';
+  }
+
+  function getScale(group) {
+    const active = document.querySelector(`.scale-btn.active`);
+    return active ? active.textContent.trim() + '/5' : '—';
+  }
+
+  function val(id) {
+    const el = document.getElementById(id);
+    return el && el.value.trim() ? el.value.trim() : '—';
+  }
+
+  function copyResult() {
+    const name = val('client-name') !== '—' ? val('client-name') : 'Клиент';
+    const date = new Date().toLocaleDateString('ru-RU');
+
+    const symptoms = [...document.querySelectorAll('#symptoms-chips .chip.active')].map(c => c.textContent.trim()).join(', ') || '—';
+    const skinIssues = [...document.querySelectorAll('#skin-issues .chip.active')].map(c => c.textContent.trim()).join(', ') || '—';
+    const goals = [...document.querySelectorAll('.section:last-of-type .chips .chip.active, .section .field .chips .chip[onclick="toggle(this)"].active')];
+
+    const goalChips = [...document.querySelectorAll('.chip[onclick="toggle(this)"].active:not(#symptoms-chips .chip):not(#skin-issues .chip)')].map(c => c.textContent.trim()).join(', ') || '—';
+
+    const text = `━━━━━━━━━━━━━━━━━━━━━
+ДИАГНОСТИКА · FOREVER YOUNG
+${name} · ${date}
+━━━━━━━━━━━━━━━━━━━━━
+
+📋 БАЗОВЫЕ ДАННЫЕ
+Возраст: ${val('age')} лет
+Пол: ${getChips('sex')}
+Рост/Вес: ${val('body')}
+
+📏 ЗАМЕРЫ
+Бицепс: ${val('m-bicep')} | Грудь: ${val('m-chest')} | Талия: ${val('m-waist')}
+Бёдра: ${val('m-hips')} | Нога: ${val('m-leg')} | Вес: ${val('m-weight')}
+
+🏃 ОБРАЗ ЖИЗНИ
+Работа: ${getChips('work')}
+Стресс: ${getScale('stress')}
+Сон: ${getChips('sleep')}
+Просыпается: ${getChips('wakeup')}
+Энергия: ${getChips('energy')}
+Тренировки: ${getChips('training')}
+
+🥗 ПИТАНИЕ
+Тип: ${getChips('diet')}
+Мясо: ${getChips('meat')}
+Сахар: ${getChips('sugar')}
+Молочное: ${getChips('dairy')}
+Глютен: ${getChips('gluten')}
+Кофе: ${getChips('coffee')}
+Аллергии: ${val('allergies')}
+Питание (описание): ${val('diet-notes')}
+
+⚠️ ВРЕДНЫЕ ПРИВЫЧКИ
+Курение: ${getChips('smoke')}
+Алкоголь: ${getChips('alcohol')}
+Другое: ${getChips('drugs')}
+
+🏥 ЗДОРОВЬЕ
+Хронические: ${val('chronic')}
+Травмы/операции: ${val('injuries')}
+Медикаменты: ${val('meds')}
+Текущие БАДы: ${val('current-supps')}
+Симптомы: ${symptoms}
+Анализы: ${val('bloodwork')}
+
+💊 ПИЩЕВАРЕНИЕ
+Кишечник: ${getChips('gut')}
+После еды: ${getChips('after-eat')}
+
+✨ КОЖА И ЛИЦО
+Тип кожи: ${getChips('skin')}
+Проблемы: ${skinIssues}
+Face Building: ${getChips('fb')}
+Цель по лицу: ${val('face-goal')}
+
+🎯 ЦЕЛИ
+Цели: ${goalChips}
+Запрос: ${val('client-goal')}
+Триггер: ${val('trigger')}
+Бюджет на БАДы: ${getChips('budget')}
+Пробовал раньше: ${val('tried')}
+
+📝 ЗАМЕТКИ АНДРОНИКА
+Впечатление: ${val('impression')}
+БАДы выписать: ${val('supps-prescribed')}
+Упор в тренировках: ${val('training-focus')}
+Ограничения: ${val('restrictions')}
+Дополнительно: ${val('extra')}
+
+━━━━━━━━━━━━━━━━━━━━━`;
+
+    navigator.clipboard.writeText(text).then(() => {
+      const btn = document.querySelector('.copy-btn');
+      btn.textContent = '✓ Скопировано!';
+      btn.style.background = '#4caf82';
+      setTimeout(() => {
+        btn.textContent = '📋 Скопировать профиль';
+        btn.style.background = 'var(--gold)';
+      }, 2500);
+    });
+
+    const box = document.getElementById('result-box');
+    box.style.display = 'block';
+    box.textContent = text;
+    box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  function clearAll() {
+    if (!confirm('Очистить всё?')) return;
+    document.querySelectorAll('input, textarea').forEach(el => el.value = '');
+    document.querySelectorAll('.chip.active, .scale-btn.active').forEach(el => el.classList.remove('active'));
+    document.getElementById('result-box').style.display = 'none';
+  }
+</script>
+</body>
+</html>
