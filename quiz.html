@@ -167,7 +167,7 @@
     width: 18px;
     height: 18px;
     border: 1.5px solid var(--border);
-    border-radius: 50%;
+    border-radius: 4px;
     flex-shrink: 0;
     transition: all 0.2s;
     display: flex;
@@ -182,10 +182,11 @@
 
   .option.selected .option-dot::after {
     content: '';
-    width: 6px;
+    width: 10px;
     height: 6px;
-    background: var(--bg);
-    border-radius: 50%;
+    border-left: 2px solid var(--bg);
+    border-bottom: 2px solid var(--bg);
+    transform: rotate(-45deg) translateY(-1px);
   }
 
   /* NAV BUTTONS */
@@ -592,7 +593,7 @@
     <div class="q-num">Вопрос 16 из 17</div>
     <div class="q-text">Какой формат тебе ближе?</div>
     <div class="options">
-      <button class="option" onclick="select(this)"><span class="option-dot"></span>Смотреть упражнения и учиться самостоятельно (~$20/мес)</button>
+      <button class="option" onclick="select(this)"><span class="option-dot"></span>Смотреть упражнения и учиться самостоятельно ($10/мес)</button>
       <button class="option" onclick="select(this)"><span class="option-dot"></span>Работать с тренером и нутрициологом лично</button>
       <button class="option" onclick="select(this)"><span class="option-dot"></span>Начну с канала — и перейду к личной программе</button>
     </div>
@@ -669,11 +670,11 @@
   ];
 
   function select(btn) {
+    btn.classList.toggle('selected');
     const q = btn.closest('.question');
-    q.querySelectorAll('.option').forEach(o => o.classList.remove('selected'));
-    btn.classList.add('selected');
-    answers[current] = btn.textContent.trim();
-    q.querySelector('.btn-next').disabled = false;
+    const selected = q.querySelectorAll('.option.selected');
+    answers[current] = Array.from(selected).map(o => o.textContent.trim()).join(', ');
+    q.querySelector('.btn-next').disabled = selected.length === 0;
   }
 
   function next() {
