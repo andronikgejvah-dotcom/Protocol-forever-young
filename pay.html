@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever Young · Программа Андроника</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: #07060a;
+    color: #f0ece4;
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  .logo {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: #c9a96e;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  h1 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(32px, 8vw, 52px);
+    font-weight: 300;
+    text-align: center;
+    line-height: 1.1;
+    margin-bottom: 12px;
+  }
+
+  .sub {
+    font-size: 15px;
+    color: #7a7060;
+    text-align: center;
+    margin-bottom: 48px;
+    line-height: 1.6;
+  }
+
+  .cards {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    width: 100%;
+    max-width: 600px;
+    margin-bottom: 32px;
+  }
+
+  @media (max-width: 480px) {
+    .cards { grid-template-columns: 1fr; }
+  }
+
+  .card {
+    background: #111018;
+    border: 1px solid #2a2530;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .card.featured {
+    border-color: rgba(201,169,110,0.45);
+    position: relative;
+  }
+
+  .badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background: #c9a96e;
+    color: #07060a;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    padding: 3px 8px;
+  }
+
+  .card-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: #4a4030;
+  }
+
+  .card.featured .card-label { color: #c9a96e; }
+
+  .card-price {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 52px;
+    color: #c9a96e;
+    line-height: 1;
+  }
+
+  .card-price span {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    color: #4a4030;
+    margin-left: 4px;
+  }
+
+  .divider {
+    width: 32px;
+    height: 1px;
+    background: #c9a96e;
+    opacity: 0.4;
+  }
+
+  .card.featured .divider { opacity: 0.7; }
+
+  .features {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    flex: 1;
+  }
+
+  .features li {
+    font-size: 13px;
+    color: #7a7060;
+    display: flex;
+    gap: 8px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+
+  .features li span { color: #c9a96e; flex-shrink: 0; }
+
+  .btn {
+    display: block;
+    padding: 14px 20px;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.06em;
+    transition: opacity 0.2s;
+    margin-top: 8px;
+  }
+
+  .btn-outline {
+    border: 1px solid rgba(201,169,110,0.4);
+    color: #c9a96e;
+  }
+
+  .btn-outline:hover { background: rgba(201,169,110,0.08); }
+
+  .btn-gold {
+    background: #c9a96e;
+    color: #07060a;
+    font-weight: 700;
+  }
+
+  .btn-gold:hover { opacity: 0.85; }
+
+  .prize-note {
+    text-align: center;
+    font-size: 13px;
+    color: #4a4030;
+    line-height: 1.7;
+    max-width: 420px;
+  }
+
+  .prize-note strong { color: #c9a96e; }
+
+  .tg-link {
+    margin-top: 28px;
+    font-size: 13px;
+    color: #4a4030;
+    text-align: center;
+  }
+
+  .tg-link a {
+    color: #7a7060;
+    text-decoration: none;
+    border-bottom: 1px solid #2a2530;
+    transition: color 0.2s;
+  }
+
+  .tg-link a:hover { color: #c9a96e; }
+</style>
+</head>
+<body>
+
+  <div class="logo">Forever Young · Andronik</div>
+  <h1>Личная программа</h1>
+  <p class="sub">2 Zoom · персональный план · розыгрыш $1000 каждый месяц</p>
+
+  <div class="cards">
+
+    <!-- 1 MONTH -->
+    <div class="card">
+      <div class="card-label">Один месяц</div>
+      <div class="card-price">19 000 <span>₽</span></div>
+      <div class="divider"></div>
+      <ul class="features">
+        <li><span>—</span> 2 Zoom с Андроником</li>
+        <li><span>—</span> Личный план тренировок</li>
+        <li><span>—</span> План питания под тебя</li>
+        <li><span>—</span> Розыгрыш $1000</li>
+      </ul>
+      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn btn-outline">
+        Начать — 1 месяц →
+      </a>
+    </div>
+
+    <!-- 2 MONTHS -->
+    <div class="card featured">
+      <div class="badge">ВЫГОДНЕЕ</div>
+      <div class="card-label">Два месяца</div>
+      <div class="card-price">32 000 <span>₽</span></div>
+      <div class="divider"></div>
+      <ul class="features">
+        <li><span>—</span> 2 Zoom каждый месяц</li>
+        <li><span>—</span> Корректировка на 2-й месяц</li>
+        <li><span>—</span> Замеры до и после</li>
+        <li><span>—</span> 2 шанса выиграть $1000</li>
+      </ul>
+      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn btn-gold">
+        Начать — 2 месяца →
+      </a>
+    </div>
+
+  </div>
+
+  <p class="prize-note">
+    Выполни все тренировки по плану —<br>
+    попадёшь в розыгрыш <strong>$1000</strong> в конце месяца
+  </p>
+
+  <div class="tg-link">
+    Вопросы → <a href="https://t.me/Dicktatoora" target="_blank">@Dicktatoora</a>
+  </div>
+
+</body>
+</html>
