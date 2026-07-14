@@ -12,7 +12,6 @@
     --card: #18151f;
     --border: #2a2530;
     --gold: #c9a96e;
-    --gold-dim: rgba(201,169,110,0.1);
     --text: #f0ece4;
     --muted: #7a7060;
     --dim: #3a3040;
@@ -22,273 +21,98 @@
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  body {
-    background: var(--bg);
-    color: var(--text);
-    font-family: var(--sans);
-    min-height: 100vh;
-  }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
 
   /* NAV */
   nav {
-    display: flex;
-    justify-content: center;
-    gap: 0;
+    display: flex; justify-content: center;
     border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    background: var(--bg);
-    z-index: 100;
+    position: sticky; top: 0; background: var(--bg); z-index: 100;
   }
-
   nav a {
-    padding: 16px 24px;
-    font-size: 12px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--muted);
-    text-decoration: none;
-    transition: color 0.2s;
-    border-bottom: 2px solid transparent;
+    padding: 16px 24px; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s; border-bottom: 2px solid transparent;
   }
-
   nav a.active, nav a:hover { color: var(--gold); }
   nav a.active { border-bottom-color: var(--gold); }
-
-  @media (max-width: 480px) {
-    nav a { padding: 14px 14px; font-size: 10px; letter-spacing: 1px; }
-  }
+  @media (max-width: 480px) { nav a { padding: 14px 14px; font-size: 10px; letter-spacing: 1px; } }
 
   /* HERO */
   .hero {
     text-align: center;
-    padding: 64px 24px 48px;
+    padding: 72px 24px 56px;
     border-bottom: 1px solid var(--border);
   }
+  .logo { font-family: var(--serif); font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(48px, 12vw, 80px); font-weight: 300; line-height: 1; margin-bottom: 20px; letter-spacing: -1px; }
+  .hero p { font-size: 16px; color: var(--muted); max-width: 340px; margin: 0 auto; line-height: 1.7; }
 
-  .logo {
-    font-family: var(--serif);
-    font-size: 12px;
-    letter-spacing: 5px;
-    text-transform: uppercase;
-    color: var(--gold);
-    margin-bottom: 20px;
-  }
-
-  .hero h1 {
-    font-family: var(--serif);
-    font-size: clamp(40px, 10vw, 72px);
-    font-weight: 300;
-    line-height: 1;
-    margin-bottom: 16px;
-    letter-spacing: -1px;
-  }
-
-  .hero p {
-    font-size: 16px;
-    color: var(--muted);
-    max-width: 360px;
-    margin: 0 auto;
-    line-height: 1.6;
-  }
-
-  /* MAIN PRODUCTS */
-  .main-products {
-    padding: 56px 24px;
-    max-width: 680px;
-    margin: 0 auto;
+  /* WHAT'S INSIDE */
+  .inside {
+    max-width: 520px; margin: 0 auto; padding: 56px 24px 0;
   }
 
   .section-label {
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--gold);
-    text-align: center;
-    margin-bottom: 32px;
+    font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
+    color: var(--gold); text-align: center; margin-bottom: 32px;
   }
 
-  .two-cards {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
+  .zones {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+    margin-bottom: 2px;
   }
 
-  @media (max-width: 480px) {
-    .two-cards { grid-template-columns: 1fr; }
+  .zone {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 20px 20px; display: flex; gap: 14px; align-items: center;
   }
 
-  .product-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 2px;
-    padding: 36px 28px 28px;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    transition: border-color 0.3s;
+  .zone-num {
+    font-family: var(--serif); font-size: 28px; color: var(--dim); line-height: 1; flex-shrink: 0;
   }
 
-  .product-card:hover { border-color: rgba(201,169,110,0.35); }
+  .zone-name { font-size: 14px; color: var(--text); line-height: 1.3; }
+  .zone-desc { font-size: 12px; color: var(--muted); margin-top: 2px; line-height: 1.4; }
 
-  .product-zone {
-    font-size: 10px;
-    letter-spacing: 3px;
-    text-transform: uppercase;
-    color: var(--gold);
+  .zone-full {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 20px 20px; display: flex; gap: 14px; align-items: center;
   }
 
-  .product-name {
-    font-family: var(--serif);
-    font-size: 36px;
-    font-weight: 300;
-    line-height: 1;
+  /* CTA */
+  .cta-wrap {
+    max-width: 520px; margin: 0 auto; padding: 48px 24px 80px; text-align: center;
   }
 
-  .product-desc {
-    font-size: 13px;
-    color: var(--muted);
-    line-height: 1.6;
-    flex: 1;
+  .price-row {
+    margin-bottom: 8px;
   }
 
-  .product-price {
-    font-family: var(--serif);
-    font-size: 42px;
-    color: var(--gold);
-    line-height: 1;
+  .price {
+    font-family: var(--serif); font-size: 72px; color: var(--gold); line-height: 1;
   }
 
-  .product-price sup {
-    font-family: var(--sans);
-    font-size: 16px;
-    vertical-align: top;
-    margin-top: 8px;
-    display: inline-block;
+  .price sup { font-family: var(--sans); font-size: 24px; vertical-align: top; margin-top: 14px; display: inline-block; }
+
+  .price-period { font-size: 14px; color: var(--dim); margin-bottom: 28px; }
+
+  .btn-subscribe {
+    display: block; padding: 18px 24px; background: var(--gold); color: var(--bg);
+    text-align: center; text-decoration: none; font-size: 16px; font-weight: 700;
+    letter-spacing: 0.04em; transition: opacity 0.2s; font-family: var(--sans);
+    max-width: 400px; margin: 0 auto 16px;
   }
+  .btn-subscribe:hover { opacity: 0.85; }
 
-  .btn-buy {
-    display: block;
-    padding: 15px 20px;
-    background: var(--gold);
-    color: var(--bg);
-    text-align: center;
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-    letter-spacing: 0.05em;
-    border-radius: 2px;
-    transition: opacity 0.2s;
-    font-family: var(--sans);
-  }
-
-  .btn-buy:hover { opacity: 0.85; }
-
-  /* DIVIDER */
-  .next-label {
-    text-align: center;
-    padding: 64px 24px 0;
-    position: relative;
-  }
-
-  .next-label::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 1px;
-    height: 48px;
-    background: linear-gradient(to bottom, transparent, var(--border));
-  }
-
-  .next-label span {
-    font-size: 10px;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
-
-  /* MORE BLOCKS */
-  .more-products {
-    padding: 32px 24px 80px;
-    max-width: 680px;
-    margin: 0 auto;
-  }
-
-  .three-cards {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 2px;
-  }
-
-  @media (max-width: 560px) {
-    .three-cards { grid-template-columns: 1fr; }
-  }
-
-  .mini-card {
-    background: var(--bg2);
-    border: 1px solid var(--border);
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-
-  .mini-zone {
-    font-size: 9px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: var(--dim);
-  }
-
-  .mini-name {
-    font-family: var(--serif);
-    font-size: 22px;
-    font-weight: 300;
-    color: var(--muted);
-  }
-
-  .mini-price {
-    font-size: 13px;
-    color: var(--dim);
-  }
-
-  .btn-mini {
-    display: block;
-    padding: 11px 16px;
-    border: 1px solid var(--border);
-    color: var(--muted);
-    text-align: center;
-    text-decoration: none;
-    font-size: 13px;
-    border-radius: 2px;
-    transition: all 0.2s;
-    font-family: var(--sans);
-    margin-top: 4px;
-  }
-
-  .btn-mini:hover { border-color: var(--gold); color: var(--gold); }
+  .cancel-note { font-size: 13px; color: var(--dim); }
 
   /* FOOTER */
   footer {
-    border-top: 1px solid var(--border);
-    padding: 28px 24px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--dim);
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    flex-wrap: wrap;
+    border-top: 1px solid var(--border); padding: 28px 24px; text-align: center;
+    font-size: 12px; color: var(--dim); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
   }
-
-  footer a {
-    color: var(--dim);
-    text-decoration: none;
-    transition: color 0.2s;
-  }
-
+  footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
   footer a:hover { color: var(--gold); }
 </style>
 </head>
@@ -303,61 +127,57 @@
 <div class="hero">
   <div class="logo">Forever Young · Andronik</div>
   <h1>Face<br>Building</h1>
-  <p>Упражнения для лица — молодость и форма без операций</p>
+  <p>Полные видео-тренировки по всем зонам лица — повторяй за мной каждый день</p>
 </div>
 
-<div class="main-products">
-  <div class="section-label">Начни с этого</div>
-  <div class="two-cards">
-
-    <div class="product-card">
-      <div class="product-zone">Зона 1</div>
-      <div class="product-name">Глаза</div>
-      <div class="product-desc">Убираем нависшие веки, мешки, поднимаем взгляд. Полный комплекс — повторяй за мной.</div>
-      <div class="product-price"><sup>$</sup>9</div>
-      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-buy">Получить →</a>
+<div class="inside">
+  <div class="section-label">Что внутри</div>
+  <div class="zones">
+    <div class="zone">
+      <div class="zone-num">01</div>
+      <div>
+        <div class="zone-name">Глаза</div>
+        <div class="zone-desc">Веки, мешки, взгляд</div>
+      </div>
     </div>
-
-    <div class="product-card">
-      <div class="product-zone">Зона 2</div>
-      <div class="product-name">Челюсть</div>
-      <div class="product-desc">Чёткая нижняя челюсть, V-shape лица. Убираем второй подбородок и дряблость.</div>
-      <div class="product-price"><sup>$</sup>9</div>
-      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-buy">Получить →</a>
+    <div class="zone">
+      <div class="zone-num">02</div>
+      <div>
+        <div class="zone-name">Челюсть</div>
+        <div class="zone-desc">V-shape, второй подбородок</div>
+      </div>
     </div>
-
+    <div class="zone">
+      <div class="zone-num">03</div>
+      <div>
+        <div class="zone-name">Носогубные</div>
+        <div class="zone-desc">Складки, щёки</div>
+      </div>
+    </div>
+    <div class="zone">
+      <div class="zone-num">04</div>
+      <div>
+        <div class="zone-name">Лоб</div>
+        <div class="zone-desc">Морщины, рельеф</div>
+      </div>
+    </div>
+  </div>
+  <div class="zone-full">
+    <div class="zone-num">05</div>
+    <div>
+      <div class="zone-name">Полный комплекс</div>
+      <div class="zone-desc">Все зоны вместе — утренняя тренировка лица</div>
+    </div>
   </div>
 </div>
 
-<div class="next-label">
-  <span>Следующие упражнения</span>
-</div>
-
-<div class="more-products">
-  <div class="three-cards">
-
-    <div class="mini-card">
-      <div class="mini-zone">Зона 3</div>
-      <div class="mini-name">Носогубные складки</div>
-      <div class="mini-price">$9</div>
-      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-mini">Получить →</a>
-    </div>
-
-    <div class="mini-card">
-      <div class="mini-zone">Зона 4</div>
-      <div class="mini-name">Лоб</div>
-      <div class="mini-price">$9</div>
-      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-mini">Получить →</a>
-    </div>
-
-    <div class="mini-card">
-      <div class="mini-zone">Зона 5</div>
-      <div class="mini-name">Полный комплекс</div>
-      <div class="mini-price">$9</div>
-      <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-mini">Получить →</a>
-    </div>
-
-  </div>
+<div class="cta-wrap">
+  <div class="price"><sup>$</sup>10</div>
+  <div class="price-period">в месяц · все видео сразу</div>
+  <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-subscribe">
+    Подписаться →
+  </a>
+  <p class="cancel-note">Отменить можно в любой момент</p>
 </div>
 
 <footer>
