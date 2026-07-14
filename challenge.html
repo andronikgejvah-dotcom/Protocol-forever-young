@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Челлендж · Forever Young · Andronik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07060a;
+    --bg2: #111018;
+    --card: #18151f;
+    --border: #2a2530;
+    --gold: #c9a96e;
+    --text: #f0ece4;
+    --muted: #7a7060;
+    --dim: #3a3040;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+
+  nav {
+    display: flex; justify-content: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg); z-index: 100;
+  }
+  nav a {
+    padding: 16px 24px; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s; border-bottom: 2px solid transparent;
+  }
+  nav a.active, nav a:hover { color: var(--gold); }
+  nav a.active { border-bottom-color: var(--gold); }
+  @media (max-width: 480px) { nav a { padding: 14px 14px; font-size: 10px; letter-spacing: 1px; } }
+
+  .hero {
+    text-align: center; padding: 64px 24px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .logo { font-family: var(--serif); font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+
+  .hero h1 { font-family: var(--serif); font-size: clamp(40px, 10vw, 72px); font-weight: 300; line-height: 1; margin-bottom: 16px; }
+
+  .hero p { font-size: 16px; color: var(--muted); max-width: 380px; margin: 0 auto; line-height: 1.6; }
+
+  .content {
+    max-width: 560px; margin: 0 auto; padding: 56px 24px 80px;
+  }
+
+  .prize-block {
+    text-align: center;
+    padding: 40px 32px;
+    border: 1px solid rgba(201,169,110,0.3);
+    background: #12101a;
+    margin-bottom: 40px;
+  }
+
+  .prize-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+
+  .prize-amount { font-family: var(--serif); font-size: 80px; color: var(--gold); line-height: 1; margin-bottom: 8px; }
+
+  .prize-note { font-size: 14px; color: var(--muted); }
+
+  .what-inside { margin-bottom: 40px; }
+
+  .what-inside h2 { font-family: var(--serif); font-size: 28px; font-weight: 300; margin-bottom: 24px; color: var(--muted); }
+
+  .item {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+  }
+
+  .item:last-child { border-bottom: none; }
+
+  .item-num { font-family: var(--serif); font-size: 20px; color: var(--gold); flex-shrink: 0; line-height: 1.2; }
+
+  .item-text { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  .item-text strong { color: var(--text); font-weight: 500; display: block; margin-bottom: 2px; }
+
+  .cta-block { text-align: center; }
+
+  .price-tag { font-family: var(--serif); font-size: 56px; color: var(--gold); margin-bottom: 8px; line-height: 1; }
+
+  .price-tag sup { font-family: var(--sans); font-size: 20px; vertical-align: top; margin-top: 12px; display: inline-block; }
+
+  .price-sub { font-size: 13px; color: var(--dim); margin-bottom: 24px; }
+
+  .btn-main {
+    display: block; padding: 18px 24px; background: var(--gold); color: var(--bg);
+    text-align: center; text-decoration: none; font-size: 15px; font-weight: 700;
+    letter-spacing: 0.05em; border-radius: 2px; transition: opacity 0.2s;
+    max-width: 400px; margin: 0 auto 12px; font-family: var(--sans);
+  }
+  .btn-main:hover { opacity: 0.85; }
+
+  .tg-note { font-size: 13px; color: var(--dim); }
+  .tg-note a { color: var(--muted); text-decoration: none; }
+  .tg-note a:hover { color: var(--gold); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 24px; text-align: center;
+    font-size: 12px; color: var(--dim); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+  }
+  footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Face Building</a>
+  <a href="challenge.html" class="active">Челлендж</a>
+  <a href="forever-young.html">Forever Young</a>
+</nav>
+
+<div class="hero">
+  <div class="logo">Forever Young · Andronik</div>
+  <h1>Челлендж</h1>
+  <p>Месяц вместе со мной — и участвуй в розыгрыше $1000</p>
+</div>
+
+<div class="content">
+
+  <div class="prize-block">
+    <div class="prize-label">Приз каждый месяц</div>
+    <div class="prize-amount">$1000</div>
+    <div class="prize-note">одному участнику который выполнил всё</div>
+  </div>
+
+  <div class="what-inside">
+    <h2>Что входит</h2>
+
+    <div class="item">
+      <div class="item-num">1</div>
+      <div class="item-text">
+        <strong>2 Zoom с Андроником</strong>
+        Первый — диагностика и цели. Второй — тренировка вместе онлайн.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">2</div>
+      <div class="item-text">
+        <strong>Личный план</strong>
+        Тренировки и питание под твои цели и ограничения.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">3</div>
+      <div class="item-text">
+        <strong>12 утренних зарядок + 12 тренировок</strong>
+        Выполняешь — скидываешь видео в закрытую группу @AndronikHandstand.
+      </div>
+    </div>
+
+    <div class="item">
+      <div class="item-num">4</div>
+      <div class="item-text">
+        <strong>Розыгрыш $1000</strong>
+        Кто сделал все — участвует. Победитель по рандому в конце месяца.
+      </div>
+    </div>
+
+  </div>
+
+  <div class="cta-block">
+    <div class="price-tag"><sup>$</sup>150</div>
+    <div class="price-sub">в месяц · старт в любое время</div>
+    <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-main">
+      Войти в челлендж →
+    </a>
+    <p class="tg-note">Вопросы → <a href="https://t.me/Dicktatoora" target="_blank">@Dicktatoora</a></p>
+  </div>
+
+</div>
+
+<footer>
+  <a href="https://t.me/ForeverYoungAVE" target="_blank">Telegram канал</a>
+  <a href="https://t.me/AndronikHandstand" target="_blank">Клуб $10/мес</a>
+  <a href="https://t.me/Dicktatoora" target="_blank">@Dicktatoora</a>
+</footer>
+
+</body>
+</html>
