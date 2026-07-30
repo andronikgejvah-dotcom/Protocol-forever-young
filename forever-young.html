@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Forever Young Protocol · Andronik</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07060a;
+    --bg2: #111018;
+    --card: #18151f;
+    --border: #2a2530;
+    --gold: #c9a96e;
+    --text: #f0ece4;
+    --muted: #7a7060;
+    --dim: #3a3040;
+    --serif: 'Cormorant Garamond', Georgia, serif;
+    --sans: 'DM Sans', -apple-system, sans-serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: var(--bg); color: var(--text); font-family: var(--sans); min-height: 100vh; }
+
+  nav {
+    display: flex; justify-content: center;
+    border-bottom: 1px solid var(--border);
+    position: sticky; top: 0; background: var(--bg); z-index: 100;
+  }
+  nav a {
+    padding: 16px 24px; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    transition: color 0.2s; border-bottom: 2px solid transparent;
+  }
+  nav a.active, nav a:hover { color: var(--gold); }
+  nav a.active { border-bottom-color: var(--gold); }
+  @media (max-width: 480px) { nav a { padding: 14px 14px; font-size: 10px; letter-spacing: 1px; } }
+
+  .hero {
+    text-align: center; padding: 64px 24px 48px;
+    border-bottom: 1px solid var(--border);
+  }
+  .logo { font-family: var(--serif); font-size: 12px; letter-spacing: 5px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+  .hero h1 { font-family: var(--serif); font-size: clamp(36px, 9vw, 64px); font-weight: 300; line-height: 1.1; margin-bottom: 16px; }
+  .hero p { font-size: 15px; color: var(--muted); max-width: 400px; margin: 0 auto; line-height: 1.7; }
+
+  .content { max-width: 600px; margin: 0 auto; padding: 56px 24px 80px; }
+
+  .block { margin-bottom: 56px; }
+
+  .block-label { font-size: 10px; letter-spacing: 4px; text-transform: uppercase; color: var(--gold); margin-bottom: 20px; }
+
+  .block h2 { font-family: var(--serif); font-size: 30px; font-weight: 300; margin-bottom: 16px; line-height: 1.2; }
+
+  .block p { font-size: 14px; color: var(--muted); line-height: 1.8; margin-bottom: 12px; }
+
+  .pillars {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-top: 24px;
+  }
+  @media (max-width: 480px) { .pillars { grid-template-columns: 1fr; } }
+
+  .pillar {
+    background: var(--bg2); border: 1px solid var(--border);
+    padding: 24px 20px;
+  }
+
+  .pillar-icon { font-size: 22px; margin-bottom: 10px; }
+  .pillar-name { font-family: var(--serif); font-size: 20px; font-weight: 300; margin-bottom: 6px; }
+  .pillar-desc { font-size: 12px; color: var(--dim); line-height: 1.6; }
+
+  .cards {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2px;
+  }
+  @media (max-width: 480px) { .cards { grid-template-columns: 1fr; } }
+
+  .card {
+    background: var(--card); border: 1px solid var(--border);
+    padding: 32px 24px; display: flex; flex-direction: column; gap: 12px;
+  }
+
+  .card.featured { border-color: rgba(201,169,110,0.4); }
+
+  .card-label { font-size: 9px; letter-spacing: 3px; text-transform: uppercase; color: var(--dim); }
+  .card.featured .card-label { color: var(--gold); }
+
+  .card-price { font-family: var(--serif); font-size: 52px; color: var(--gold); line-height: 1; }
+  .card-price sup { font-family: var(--sans); font-size: 16px; vertical-align: top; margin-top: 10px; display: inline-block; }
+
+  .divider-line { width: 32px; height: 1px; background: var(--gold); opacity: 0.3; }
+  .card.featured .divider-line { opacity: 0.7; }
+
+  .features { list-style: none; display: flex; flex-direction: column; gap: 8px; flex: 1; }
+  .features li { font-size: 13px; color: var(--muted); display: flex; gap: 8px; align-items: flex-start; line-height: 1.5; }
+  .features li span { color: var(--gold); flex-shrink: 0; }
+
+  .btn-outline {
+    display: block; padding: 14px 16px; text-align: center; text-decoration: none;
+    border: 1px solid rgba(201,169,110,0.35); color: var(--gold); font-size: 13px;
+    transition: background 0.2s; font-family: var(--sans); margin-top: 8px;
+  }
+  .btn-outline:hover { background: rgba(201,169,110,0.08); }
+
+  .btn-gold {
+    display: block; padding: 14px 16px; text-align: center; text-decoration: none;
+    background: var(--gold); color: var(--bg); font-size: 13px; font-weight: 700;
+    transition: opacity 0.2s; font-family: var(--sans); margin-top: 8px;
+  }
+  .btn-gold:hover { opacity: 0.85; }
+
+  .note { font-size: 13px; color: var(--dim); text-align: center; line-height: 1.7; margin-top: 24px; }
+  .note strong { color: var(--gold); }
+
+  footer {
+    border-top: 1px solid var(--border); padding: 28px 24px; text-align: center;
+    font-size: 12px; color: var(--dim); display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+  }
+  footer a { color: var(--dim); text-decoration: none; transition: color 0.2s; }
+  footer a:hover { color: var(--gold); }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html">Face Building</a>
+  <a href="challenge.html">Челлендж</a>
+  <a href="forever-young.html" class="active">Forever Young</a>
+</nav>
+
+<div class="hero">
+  <div class="logo">Forever Young · Andronik</div>
+  <h1>Личная<br>программа</h1>
+  <p>Тело, лицо, питание, БАДы — системная работа над собой с Андроником лично</p>
+</div>
+
+<div class="content">
+
+  <div class="block">
+    <div class="block-label">Что такое Forever Young</div>
+    <p>Это не просто тренировки. Это система: тело, лицо, питание, восстановление и правильные добавки — всё вместе под твою физиологию и цели.</p>
+    <p>2 Zoom в месяц, личный план, корректировка по ходу. Я веду тебя как тренер и нутрициолог.</p>
+
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar-icon">💪</div>
+        <div class="pillar-name">Тело</div>
+        <div class="pillar-desc">Сплит по группам мышц, баланс, йога, активные дни</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">✦</div>
+        <div class="pillar-name">Лицо</div>
+        <div class="pillar-desc">Face Building — форма и молодость без операций</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🥗</div>
+        <div class="pillar-name">Питание</div>
+        <div class="pillar-desc">Под твой тип, без жёстких ограничений</div>
+      </div>
+      <div class="pillar">
+        <div class="pillar-icon">🧬</div>
+        <div class="pillar-name">БАДы</div>
+        <div class="pillar-desc">По анализам крови — точечно и с пользой</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="block">
+    <div class="block-label">Выбери формат</div>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-label">Один месяц</div>
+        <div class="card-price"><sup>$</sup>240</div>
+        <div class="divider-line"></div>
+        <ul class="features">
+          <li><span>—</span> 2 Zoom с Андроником</li>
+          <li><span>—</span> Личный план тренировок</li>
+          <li><span>—</span> План питания под тебя</li>
+          <li><span>—</span> Участие в челлендже</li>
+        </ul>
+        <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-outline">Начать — 1 месяц →</a>
+      </div>
+
+      <div class="card featured">
+        <div class="card-label">Два месяца</div>
+        <div class="card-price"><sup>$</sup>400</div>
+        <div class="divider-line"></div>
+        <ul class="features">
+          <li><span>—</span> 2 Zoom каждый месяц</li>
+          <li><span>—</span> Корректировка на 2-й месяц</li>
+          <li><span>—</span> Замеры до и после</li>
+          <li><span>—</span> 2 месяца челленджа</li>
+        </ul>
+        <a href="https://boosty.to/andronik_forever_young" target="_blank" class="btn-gold">Начать — 2 месяца →</a>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <a href="https://instagram.com/andronik_forever_young" target="_blank">Instagram</a>
+  <a href="https://t.me/ForeverYoungAVE" target="_blank">Telegram канал</a>
+  <a href="https://t.me/AndronikHandstand" target="_blank">Клуб $10/мес</a>
+  <a href="https://t.me/ANDRONIK_FOREVERYOUNG" target="_blank">@ANDRONIK_FOREVERYOUNG</a>
+</footer>
+
+</body>
+</html>
