@@ -10,7 +10,7 @@
 
 Hi [Brand] team,
 
-I'm Andronik (@andronik_foreveryoung). I post face fitness and anti-aging routines every day. My Reel "Jawline Sculpting" has 35.3M views, and two more have 5.3M and 3M. [product] fits exactly what my audience comes to me for.
+I'm Andronik (@andronik_foreveryoung). I post face fitness and anti-aging routines every day. Three of my Reels passed 10M views: "Jawline Sculpting" (35.3M), "5 Exercises for a Defined Jawline" (13M) and "Keep Your Tongue" (12M). [product] fits exactly what my audience comes to me for.
 
 WHO WATCHES (Instagram Insights)
 - 67% women, 33% men
@@ -47,7 +47,7 @@ Instagram: @andronik_foreveryoung
 
 ## 2. Instagram DM
 
-Hi [Brand]! I'm Andronik, a face-fitness creator 💪 My top Reel has 35.3M views, and I got 3.36M views in the last 30 days.
+Hi [Brand]! I'm Andronik, a face-fitness creator 💪 Three of my Reels passed 10M views (top one: 35.3M), and I got 3.36M views in the last 30 days.
 Audience: 67% women, 71% aged 25–44, into anti-aging and beauty tech.
 I'd love to feature [product] in my daily face routine as a paid collab. Who's the right person or email for partnerships? I can send my media kit 🙏
 
@@ -67,7 +67,7 @@ Andronik
 
 **Тема:** Платная интеграция [продукта]: Reels до 35 млн просмотров, 67% аудитории — женщины 25–44
 
-Здравствуйте! Меня зовут Андроник, @andronik_foreveryoung. Я каждый день публикую упражнения по фейсфитнесу и anti-age. Мой Reels «Jawline Sculpting» набрал 35,3 млн просмотров, ещё два — 5,3 млн и 3 млн.
+Здравствуйте! Меня зовут Андроник, @andronik_foreveryoung. Я каждый день публикую упражнения по фейсфитнесу и anti-age. Три моих Reels набрали больше 10 млн просмотров: «Jawline Sculpting» — 35,3 млн, «5 Exercises for a Defined Jawline» — 13 млн, «Keep Your Tongue» — 12 млн.
 
 Аудитория (Instagram Insights):
 - 67% женщины, 33% мужчины
