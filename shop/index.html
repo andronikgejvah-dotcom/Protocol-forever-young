@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Andronik's Face Tools</title>
+<meta name="description" content="The face-fitness tools and devices from @andronik_foreveryoung: microcurrent, LED, gua sha, massagers and more.">
+<style>
+:root{--bg:#f7f3ee;--card:#fff;--ink:#1c1b19;--muted:#6b645c;--accent:#7a5c3e;--accent-2:#c58a54;--line:#e7dfd4}
+@media (prefers-color-scheme:dark){:root{--bg:#141311;--card:#1f1d1a;--ink:#f3eee7;--muted:#a89f94;--accent:#d7a978;--accent-2:#c58a54;--line:#2e2b27}}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"Helvetica Neue",Arial,sans-serif;line-height:1.45}
+.wrap{max-width:960px;margin:0 auto;padding:28px 16px 48px}
+header{text-align:center;margin-bottom:22px}
+h1{font-family:Georgia,serif;font-weight:400;font-size:34px;letter-spacing:-.3px}
+.sub{color:var(--muted);margin-top:6px;font-size:15px}
+.ig{display:inline-block;margin-top:10px;color:var(--accent);text-decoration:none;font-weight:600;font-size:14px}
+.tabs{display:flex;gap:8px;overflow-x:auto;padding:4px 0 14px;margin-bottom:6px;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+.tab[aria-pressed=true]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.cat{font-size:11px;letter-spacing:1.4px;text-transform:uppercase;color:var(--accent)}
+.card h2{font-family:Georgia,serif;font-weight:400;font-size:21px;line-height:1.2}
+.brand{font-size:13px;color:var(--muted)}
+.card p{font-size:14px;color:var(--muted);flex:1}
+.pick{align-self:flex-start;font-size:11px;font-weight:700;background:var(--accent-2);color:#fff;border-radius:6px;padding:3px 8px}
+.btn{display:block;text-align:center;background:var(--ink);color:var(--bg);text-decoration:none;font-weight:600;border-radius:10px;padding:12px;margin-top:6px}
+.btn:active{opacity:.8}
+.disclosure{margin-top:28px;font-size:12px;color:var(--muted);text-align:center}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+ <h1>My Face Tools</h1>
+ <p class="sub">Microcurrent, LED, gua sha and massagers that work with my 5-minute face routine.</p>
+ <a class="ig" href="https://www.instagram.com/andronik_foreveryoung/">@andronik_foreveryoung</a>
+</header>
+<nav class="tabs" id="tabs" aria-label="Categories"></nav>
+<main class="grid" id="grid"></main>
+<p class="disclosure">Some links on this page are affiliate links: I may earn a small commission at no extra cost to you.</p>
+</div>
+<script>
+/* ===== НАСТРОЙКИ =====
+ 1) AMAZON_TAG: ваш тег из Amazon Associates (например "andronik-20").
+    Пока он пустой, кнопки ведут на Amazon без комиссии.
+ 2) У любого товара можно заполнить поле link своей партнёрской ссылкой
+    (ShopMy, Awin, сайт бренда): тогда кнопка ведёт по ней, а не на Amazon. */
+const AMAZON_TAG = "";
+
+const PRODUCTS = [
+ {cat:"Microcurrent", name:"NuFACE Mini+", brand:"NuFACE", text:"FDA-cleared microcurrent for cheeks, jawline and neck in 5 minutes.", q:"NuFACE Mini+ microcurrent", pick:true},
+ {cat:"Microcurrent", name:"ZIIP HALO", brand:"ZIIP", text:"Microcurrent + nanocurrent with guided facials in the app.", q:"ZIIP HALO facial device"},
+ {cat:"Microcurrent", name:"Age-R Booster Pro", brand:"Medicube", text:"6-in-1 device: microcurrent, EMS, LED and glow modes.", q:"medicube age-r booster pro"},
+ {cat:"Microcurrent", name:"BEAR 2", brand:"FOREO", text:"Microcurrent toning device with anti-shock safety.", q:"FOREO BEAR 2 microcurrent"},
+ {cat:"LED", name:"Series 2 LED Mask", brand:"CurrentBody", text:"Red + near-infrared LED mask, 10 minutes a day.", q:"CurrentBody LED face mask", pick:true},
+ {cat:"LED", name:"Contour Face", brand:"Omnilux", text:"Medical-grade flexible LED mask.", q:"Omnilux Contour Face LED mask"},
+ {cat:"LED", name:"Radiant Renewal Wand", brand:"Solawave", text:"Red light, microcurrent, warmth and massage in a pocket wand.", q:"Solawave Radiant Renewal Wand"},
+ {cat:"Gua sha & rollers", name:"Gua Sha Stone", brand:"Mount Lai", text:"The classic tool for lymphatic drainage and jaw tension.", q:"Mount Lai gua sha", pick:true},
+ {cat:"Gua sha & rollers", name:"Jade Facial Roller", brand:"Mount Lai", text:"Cooling roller for morning de-puffing.", q:"Mount Lai jade facial roller"},
+ {cat:"Gua sha & rollers", name:"Ice Roller", brand:"Various", text:"Cold therapy for puffy eyes and morning swelling.", q:"ice roller face"},
+ {cat:"Massagers", name:"TheraFace", brand:"Therabody", text:"Percussive face massager with LED and microcurrent heads.", q:"Therabody TheraFace"},
+ {cat:"Massagers", name:"Electric Gua Sha", brand:"Various", text:"Heat + vibration gua sha for neck and jawline.", q:"electric gua sha face massager"},
+ {cat:"Massagers", name:"Acupressure Mat", brand:"Shakti", text:"Relaxes the back and neck: posture matters for the jawline.", q:"Shakti acupressure mat"},
+ {cat:"Hair", name:"Laser Hair Comb", brand:"HairMax", text:"FDA-cleared laser comb for thinning hair.", q:"HairMax laser comb"},
+ {cat:"Hair", name:"Scalp Massager", brand:"Various", text:"Silicone scalp brush for circulation in the shower.", q:"scalp massager shampoo brush"},
+ {cat:"Supplements", name:"Collagen Peptides", brand:"Vital Proteins", text:"Daily collagen for skin, hair and nails.", q:"Vital Proteins Collagen Peptides"},
+ {cat:"Supplements", name:"Marine Collagen", brand:"Absolute Collagen", text:"Liquid marine collagen sachets.", q:"Absolute Collagen marine"},
+];
+
+function href(p){
+ if(p.link) return p.link;
+ const u = "https://www.amazon.com/s?k=" + encodeURIComponent(p.q);
+ return AMAZON_TAG ? u + "&tag=" + encodeURIComponent(AMAZON_TAG) : u;
+}
+const cats = ["All", ...new Set(PRODUCTS.map(p=>p.cat))];
+const tabs = document.getElementById("tabs"), grid = document.getElementById("grid");
+function render(cat){
+ grid.innerHTML = "";
+ PRODUCTS.filter(p=>cat==="All"||p.cat===cat).forEach(p=>{
+  const a = document.createElement("article"); a.className="card";
+  a.innerHTML = `<span class="cat"></span>${p.pick?'<span class="pick">MY PICK</span>':''}<h2></h2><span class="brand"></span><p></p><a class="btn" target="_blank" rel="sponsored noopener">Shop now</a>`;
+  a.querySelector(".cat").textContent=p.cat; a.querySelector("h2").textContent=p.name;
+  a.querySelector(".brand").textContent=p.brand; a.querySelector("p").textContent=p.text;
+  a.querySelector(".btn").href=href(p);
+  grid.appendChild(a);
+ });
+ [...tabs.children].forEach(b=>b.setAttribute("aria-pressed", b.dataset.cat===cat));
+}
+cats.forEach(c=>{const b=document.createElement("button");b.className="tab";b.textContent=c;b.dataset.cat=c;b.onclick=()=>render(c);tabs.appendChild(b);});
+render("All");
+</script>
+</body>
+</html>
